@@ -13,24 +13,28 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import GradeIcon from '@material-ui/icons/Grade';
 import ListIcon from '@material-ui/icons/List';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { Box, Button, Divider } from '@material-ui/core';
+import {useHistory} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
       maxWidth: 360,
-      backgroundColor:theme.palette.secondary.main,
+      backgroundColor:theme.palette.primary.main,
       minHeight:'100vh',
-      color: 'rgb(145, 158, 171)'
     },
     nested: {
       paddingLeft: theme.spacing(4),
     },
   }));
 const Sidebar = () => {
+    const history=useHistory();
     const classes = useStyles();
     const [openProjects, setOpenProjects] = useState(true);
     const [openClients, setOpenClients] = useState(true);
     const [openEmployees, setOpenEmployees] = useState(true);
-    
+    const redirectTo=(url)=>{
+        history.push(url);
+    }
     return ( 
         <List
         component="nav"
@@ -52,17 +56,17 @@ const Sidebar = () => {
         </ListItem>
         <Collapse in={openProjects} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
+            <ListItem  button onClick={()=>redirectTo('/proyectos')} className={classes.nested}>
                 <ListItemIcon>
                     <ListIcon />
                 </ListItemIcon>
-                <ListItemText primary="Todos" />
+                <ListItemText secondary="Todos" />
             </ListItem>
-            <ListItem button className={classes.nested}>
+            <ListItem button onClick={()=>redirectTo('/nuevo-proyecto')} className={classes.nested}>
                 <ListItemIcon>
                     <AddCircleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Agregar nuevo" />
+                <ListItemText secondary="Agregar nuevo" />
             </ListItem>
           </List>
           
@@ -82,13 +86,13 @@ const Sidebar = () => {
                     <ListItemIcon>
                         <ListIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Todos" />
+                    <ListItemText secondary="Todos" />
                 </ListItem>
                 <ListItem button className={classes.nested}>
                     <ListItemIcon>
                         <AddCircleIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Agregar nuevo" />
+                    <ListItemText secondary="Agregar nuevo" />
                 </ListItem>
             </List>
         </Collapse>
@@ -106,18 +110,22 @@ const Sidebar = () => {
             <List component="div" disablePadding>
                 <ListItem button className={classes.nested}>
                     <ListItemIcon>
-                        <ListIcon />
+                        <ListIcon  />
                     </ListItemIcon>
-                    <ListItemText primary="Todos" />
+                    <ListItemText secondary="Todos" />
                 </ListItem>
                 <ListItem button className={classes.nested}>
                     <ListItemIcon>
                         <AddCircleIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Agregar nuevo" />
+                    <ListItemText secondary="Agregar nuevo" />
                 </ListItem>
             </List>
         </Collapse>
+        <Divider/>
+        <Box paddingX={2} paddingTop={2} >
+            <Button color='secondary' fullWidth={true} variant='contained' >Cerrar sesión</Button>
+        </Box>
         
       </List>
      );

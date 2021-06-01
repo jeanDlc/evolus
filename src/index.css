@@ -4,4 +4,7 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
+a{
+  color: white;
+  text-decoration: none;
+}
