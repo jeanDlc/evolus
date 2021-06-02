@@ -1,0 +1,53 @@
+{
+    "tasks":[
+        {
+            "idTarea":1,
+            "idProyecto":111,
+            "nombre":"Limpiar primera llanta",
+            "descripcion":"Pellentesque eu felis et magna interdum elementum sed ac justo. Suspendisse potenti. Suspendisse potenti. Quisque malesuada eros sapien, nec pretium magna fermentum et.",
+            "estado":true,
+            "fecha_fin":"2 noviembre del 2021"
+        },
+        {
+            "idTarea":2,
+            "idProyecto":111,
+            "nombre":"Limpiar primera llanta",
+            "descripcion":"Pellentesque eu felis et magna interdum elementum sed ac justo. Suspendisse potenti. Suspendisse potenti. Quisque malesuada eros sapien, nec pretium magna fermentum et.",
+            "estado":false,
+            "fecha_fin":"2 noviembre del 2021"
+        },
+        {
+            "idTarea":3,
+            "idProyecto":111,
+            "nombre":"Limpiar primera llanta",
+            "descripcion":"Pellentesque eu felis et magna interdum elementum sed ac justo. Suspendisse potenti. Suspendisse potenti. Quisque malesuada eros sapien, nec pretium magna fermentum et.",
+            "estado":true,
+            "fecha_fin":"2 enero del 2021"
+        },
+        {
+            "idTarea":4,
+            "idProyecto":111,
+            "nombre":"Limpiar primera llanta",
+            "descripcion":"Pellentesque eu felis et magna interdum elementum sed ac justo. Suspendisse potenti. Suspendisse potenti. Quisque malesuada eros sapien, nec pretium magna fermentum et.",
+            "estado":true,
+            "fecha_fin":"2 noviembre del 2021"
+        },
+        {
+            "idTarea":5,
+            "idProyecto":111,
+            "nombre":"Limpiar primera llanta",
+            "descripcion":"Pellentesque eu felis et magna interdum elementum sed ac justo. Suspendisse potenti. Suspendisse potenti. Quisque malesuada eros sapien, nec pretium magna fermentum et.",
+            "estado":true,
+            "fecha_fin":"12 de Marzo del 2021"
+        },
+        {
+            "idTarea":6,
+            "idProyecto":111,
+            "nombre":"Limpiar primera llanta",
+            "descripcion":"Pellentesque eu felis et magna interdum elementum sed ac justo. Suspendisse potenti. Suspendisse potenti. Quisque malesuada eros sapien, nec pretium magna fermentum et.",
+            "estado":false,
+            "fecha_fin":"15 de julio del 2021"
+        }
+        
+    ]
+}

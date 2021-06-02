@@ -8,6 +8,7 @@ import SignIn from './components/SignIn';
 import NewProject from './components/Projects/NewProject';
 import AllProjects from './components/Projects/AllProjects';
 import ProjectPage from './components/Projects/ProjectPage';
+import TaskPage from './components/Tasks/TaskPage';
 function App() {
   let theme = useTheme();
 theme = responsiveFontSizes(theme);
@@ -33,6 +34,9 @@ theme = responsiveFontSizes(theme);
                 </Route>
                 <Route exact path='/proyecto/:id' >
                   <ProjectPage/>
+                </Route>
+                <Route path='/tarea/:id' >
+                  <TaskPage/>
                 </Route>
             </Switch>
         </Layout>

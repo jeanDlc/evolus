@@ -14,7 +14,7 @@ import GradeIcon from '@material-ui/icons/Grade';
 import ListIcon from '@material-ui/icons/List';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Box, Button, Divider } from '@material-ui/core';
-import {useHistory} from 'react-router-dom'
+import useRedirecTo from '../../lib/hooks/useRedirecTo';
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -27,14 +27,11 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 const Sidebar = () => {
-    const history=useHistory();
     const classes = useStyles();
     const [openProjects, setOpenProjects] = useState(true);
     const [openClients, setOpenClients] = useState(true);
     const [openEmployees, setOpenEmployees] = useState(true);
-    const redirectTo=(url)=>{
-        history.push(url);
-    }
+    const redirectTo=useRedirecTo();
     return ( 
         <List
         component="nav"

@@ -13,16 +13,16 @@ const Layout = ({children}) => {
     return ( 
         <>
             <Navbar/>
-            <Grid style={{maxWidth:'100%'}} container spacing={3} >
-                {bigScreen && (
+            {bigScreen?(
+                <Grid style={{maxWidth:'100%'}} container spacing={3} >
                     <Grid item md={4} lg={3} xl={2} >
                         <Sidebar/>
                     </Grid>
-                )}
-                <Grid item xs={12} md={8} lg={9} xl={10} >
-                    {children}
+                    <Grid item xs={12} md={8} lg={9} xl={10} >
+                        {children}
+                    </Grid>
                 </Grid>
-            </Grid>
+            ) : <> {children}  </>}
             <Footer/>
         </>
      );
