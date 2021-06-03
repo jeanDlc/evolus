@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import Grid from '@material-ui/core/Grid';
-import Footer from './Footer';
+
 import Navbar from './Navbar';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -14,7 +14,7 @@ const Layout = ({children}) => {
         <>
             <Navbar/>
             {bigScreen?(
-                <Grid style={{maxWidth:'100%'}} container spacing={3} >
+                <Grid style={{maxWidth:'100%'}} container  >
                     <Grid item md={4} lg={3} xl={2} >
                         <Sidebar/>
                     </Grid>
@@ -23,7 +23,6 @@ const Layout = ({children}) => {
                     </Grid>
                 </Grid>
             ) : <> {children}  </>}
-            <Footer/>
         </>
      );
 }

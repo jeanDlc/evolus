@@ -5,13 +5,12 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {truncatePhrase} from '../../lib/functions/functions';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
+import PhoneIcon from '@material-ui/icons/Phone';
+import EmailIcon from '@material-ui/icons/Email';
 const useStyles = makeStyles((theme) => ({
     danger: {
       color: theme.palette.error.main
@@ -19,40 +18,47 @@ const useStyles = makeStyles((theme) => ({
     success: {
       color:theme.palette.success.main
     },
+    icon:{
+        color:theme.palette.primary.contrastText,
+        fontSize:20,
+        marginRight:10
+    }
   }));
-const CardProjectItem = ({project}) => {
+const CardClientItem = ({client}) => {
     
     const classes=useStyles();
     const redirectTo=useRedirecTo();
     return ( 
         <Card >
-            <CardActionArea onClick={()=>redirectTo(`/proyecto/${project.idProyecto}`)} >
+            <CardActionArea onClick={()=>redirectTo(`/cliente/${client.idCliente}`)} >
                 <CardContent>
-                    <Typography component='h3' gutterBottom variant='h5' >{project.nombre} </Typography>
-                    <Typography gutterBottom variant="body2" color="textSecondary" component="p">
-                        {truncatePhrase(project.descripcion)}
-                    </Typography>
-                    <Typography  variant="body2" component="p">
-                        <span style={{fontWeight:'bold'}} >Matrícula: </span> {project.numMatricula}
-                    </Typography>
+                    <Typography component='h3' gutterBottom variant='h5' >{client.nombre} {client.apellidos} </Typography>
+                    <Box display='flex' alignItems='center' >
+                        <PhoneIcon  className={classes.icon} />
+                        <Typography gutterBottom variant="body2" color="textSecondary" component="p">
+                            {client.num_telefonico}
+                        </Typography>
+                    </Box>
+                    <Box display='flex' alignItems='center' >
+                        <EmailIcon className={classes.icon} />
+                        <Typography gutterBottom variant="body2" color="textSecondary" component="p">
+                            {client.email}
+                        </Typography>
+                    </Box>
+                    
                 </CardContent>
             </CardActionArea>
             <CardActions>
                 <Box display='flex' alignItems='center' >
                     <Button color='secondary' style={{marginRight:20}} 
-                        onClick={()=>redirectTo(`/proyecto/${project.idProyecto}`)}  
+                        onClick={()=>redirectTo(`/cliente/${client.idCliente}`)}  
                     >
                         Ver más <ArrowForwardIosIcon style={{fontSize:15}} />
                     </Button>
-                    {project.estado? (
-                        <CheckCircleIcon className={classes.success} />
-                    ): (
-                        <CheckCircleOutlineIcon className={classes.danger} />
-                    )}
                 </Box>
             </CardActions>
         </Card>
      );
 }
  
-export default CardProjectItem;
+export default CardClientItem;

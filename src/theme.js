@@ -1,4 +1,4 @@
-import { red, indigo, green } from '@material-ui/core/colors';
+import { red, indigo, green, yellow, blue } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 // A custom theme for this app
@@ -20,6 +20,12 @@ const theme = createMuiTheme({
     },
     success:{
       main:green.A400
+    },
+    warning:{
+      main:yellow[800]
+    },
+    info:{
+      main:blue.A400
     },
     type:'dark',
     

@@ -31,7 +31,7 @@ const CardTaskItem = ({task}) => {
             
             <CardActions>
                 <Box display='flex' alignItems='center' >
-                    <Button style={{marginRight:20}} 
+                    <Button color='secondary' style={{marginRight:20}} 
                         onClick={()=>redirectTo(`/tarea/${task.idTarea}`)}  
                     >
                         Ver más <ArrowForwardIosIcon style={{fontSize:15}} />

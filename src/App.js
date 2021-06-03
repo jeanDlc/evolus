@@ -9,6 +9,9 @@ import NewProject from './components/Projects/NewProject';
 import AllProjects from './components/Projects/AllProjects';
 import ProjectPage from './components/Projects/ProjectPage';
 import TaskPage from './components/Tasks/TaskPage';
+import AllClients from './components/clients/AllClients';
+import ClientPage from './components/clients/ClientPage';
+import AllEmployees from './components/employees/AllEmployees';
 function App() {
   let theme = useTheme();
 theme = responsiveFontSizes(theme);
@@ -37,6 +40,15 @@ theme = responsiveFontSizes(theme);
                 </Route>
                 <Route path='/tarea/:id' >
                   <TaskPage/>
+                </Route>
+                <Route path='/clientes' >
+                  <AllClients/>
+                </Route>
+                <Route path='/cliente/:id' >
+                  <ClientPage/>
+                </Route>
+                <Route path='/empleados' >
+                  <AllEmployees/>
                 </Route>
             </Switch>
         </Layout>

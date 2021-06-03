@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: 360,
       backgroundColor:theme.palette.primary.main,
       minHeight:'100vh',
+      height: '100%'
     },
     nested: {
       paddingLeft: theme.spacing(4),
@@ -79,7 +80,7 @@ const Sidebar = () => {
         </ListItem>
         <Collapse in={openEmployees} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <ListItem button className={classes.nested}>
+                <ListItem button onClick={()=>redirectTo('/empleados')}  className={classes.nested}>
                     <ListItemIcon>
                         <ListIcon />
                     </ListItemIcon>
@@ -96,7 +97,7 @@ const Sidebar = () => {
 
 
         {/**Lista de clientes *************************************************/}
-        <ListItem button onClick={()=>setOpenClients(!openClients)}>
+        <ListItem button  onClick={()=>setOpenClients(!openClients)}>
             <ListItemIcon>
                 <GradeIcon />
             </ListItemIcon>
@@ -105,7 +106,7 @@ const Sidebar = () => {
         </ListItem>
         <Collapse in={openClients} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <ListItem button className={classes.nested}>
+                <ListItem button onClick={()=>redirectTo('/clientes')} className={classes.nested}>
                     <ListItemIcon>
                         <ListIcon  />
                     </ListItemIcon>
