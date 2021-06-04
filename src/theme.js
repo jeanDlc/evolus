@@ -36,6 +36,11 @@ const theme = createMuiTheme({
       root:{
         backgroundColor:'rgb(34, 43, 54)'
       }
+    },
+    MuiMenu:{
+      list:{
+        backgroundColor:'rgb(34, 43, 54)'
+      }
     }
   }
   

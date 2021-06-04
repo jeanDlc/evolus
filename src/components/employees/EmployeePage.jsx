@@ -11,21 +11,25 @@ import EmailIcon from '@material-ui/icons/Email';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
 import HomeIcon from '@material-ui/icons/Home';
 import Btn from '../ui/Btn';
-import StarIcon from '@material-ui/icons/Star';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import CheckIcon from '@material-ui/icons/Check';
+import WorkIcon from '@material-ui/icons/Work';
 const ProjectPage = () => {
     
     const params=useParams();
-    const idCliente= params.id;
-    console.log(idCliente);
+    const idEmpleado= params.id;
+    console.log(idEmpleado);
     return ( 
         <Container component='main' maxWidth='sm' style={{width:'100%'}} >
             <Card style={{marginTop:30, width:'100%'}} >
                 <CardContent>
-                    <Typography component='h2' variant='h4' align='center' gutterBottom  >Toño Perez</Typography>
-                    <Box display='flex' justifyContent='center' marginBottom={1}  >
-                        <StarIcon style={{marginRight:8}} />
-                        <Typography align='center'  gutterBottom >Cliente</Typography>
+                    <Typography component='h2' variant='h4' align='center' gutterBottom  >Mario Andrade Apaza</Typography>
+                    <Box display='flex' justifyContent='center' >
+                        <WorkIcon style={{marginRight:8}} />
+                        <Typography align='center'  gutterBottom >Empleado</Typography>
+
                     </Box>
+                    
                     <Divider/>
                     <Grid container spacing={3}>
                         <Grid item md={6} >
@@ -34,19 +38,31 @@ const ProjectPage = () => {
                                     <ListItemIcon  >
                                         <PersonIcon/>
                                     </ListItemIcon>
-                                    <ListItemText primary='Nombre' secondary='Toño' />
+                                    <ListItemText primary='Nombre' secondary='Mario' />
                                 </ListItem>
                                 <ListItem >
                                     <ListItemIcon  >
                                         <PersonIcon/>
                                     </ListItemIcon>
-                                    <ListItemText primary='Apellido' secondary='Pérez Aldivar' />
+                                    <ListItemText primary='Apellido' secondary='Andrade Apaza' />
                                 </ListItem>
                                 <ListItem >
                                     <ListItemIcon  >
                                         <PhoneIcon/>
                                     </ListItemIcon>
                                     <ListItemText primary='Teléfono' secondary='+51 952 143 999' />
+                                </ListItem>
+                                <ListItem >
+                                    <ListItemIcon  >
+                                        <AccountBoxIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary='User' secondary='and_@gmail.com' />
+                                </ListItem>
+                                <ListItem >
+                                    <ListItemIcon  >
+                                        <WorkIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary='Cargo' secondary='Jefe de taller' />
                                 </ListItem>
                             </List>
                         </Grid>
@@ -56,7 +72,7 @@ const ProjectPage = () => {
                                     <ListItemIcon  >
                                         <EmailIcon/>
                                     </ListItemIcon>
-                                    <ListItemText primary='Email' secondary='tonio@gmail.com' />
+                                    <ListItemText primary='Email' secondary='mar_andr@gmail.com' />
                                 </ListItem>
                                 <ListItem >
                                     <ListItemIcon  >
@@ -68,7 +84,13 @@ const ProjectPage = () => {
                                     <ListItemIcon  >
                                         <HomeIcon/>
                                     </ListItemIcon>
-                                    <ListItemText primary='Dirección' secondary='Mz Los Bolitos ' />
+                                    <ListItemText primary='Dirección' secondary='Mz Los Lejanos ' />
+                                </ListItem>
+                                <ListItem >
+                                    <ListItemIcon  >
+                                        <CheckIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary='Activo' secondary='Sí ' />
                                 </ListItem>
                             </List>
                         </Grid>
@@ -78,10 +100,10 @@ const ProjectPage = () => {
                 <CardActions>
                     <Grid  container spacing={2} style={{marginBottom:5}} >
                         <Grid item md={6} >
-                            <Btn fullWidth={true}  color='secondary'>Editar cliente</Btn>
+                            <Btn fullWidth={true}  color='secondary'>Editar empleado</Btn>
                         </Grid>
                         <Grid item md={6} >
-                            <Btn  fullWidth={true}  color='red' >Eliminar cliente</Btn>
+                            <Btn  fullWidth={true}  color='red' >Eliminar empleado</Btn>
                         </Grid>
                     </Grid>
                 </CardActions>

@@ -15,6 +15,7 @@ import ListIcon from '@material-ui/icons/List';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Box, Button, Divider } from '@material-ui/core';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -86,7 +87,7 @@ const Sidebar = () => {
                     </ListItemIcon>
                     <ListItemText secondary="Todos" />
                 </ListItem>
-                <ListItem button className={classes.nested}>
+                <ListItem button onClick={()=>redirectTo('/nuevo-empleado')} className={classes.nested}>
                     <ListItemIcon>
                         <AddCircleIcon />
                     </ListItemIcon>
@@ -122,7 +123,7 @@ const Sidebar = () => {
         </Collapse>
         <Divider/>
         <Box paddingX={2} paddingTop={2} >
-            <Button color='secondary' fullWidth={true} variant='contained' >Cerrar sesión</Button>
+            <Button startIcon={<ExitToAppIcon/>}  color='secondary' fullWidth={true} variant='contained' >Cerrar sesión</Button>
         </Box>
         
       </List>

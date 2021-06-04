@@ -30,7 +30,7 @@ const Btn = ({children, onClick,fullWidth=false ,color='green' }) => {
     }
     
     return ( 
-        <Button fullWidth={fullWidth} onClick={onClick} style={{backgroundColor:bgColor}} > {children} </Button>
+        <Button fullWidth={fullWidth} onClick={onClick} style={{backgroundColor:bgColor, marginBottom:10}} > {children} </Button>
      );
 }
  
