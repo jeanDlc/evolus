@@ -57,13 +57,13 @@ const Sidebar = () => {
           <List component="div" disablePadding>
             <ListItem  button onClick={()=>redirectTo('/proyectos')} className={classes.nested}>
                 <ListItemIcon>
-                    <ListIcon />
+                    <ListIcon fontSize='small'/>
                 </ListItemIcon>
                 <ListItemText secondary="Todos" />
             </ListItem>
             <ListItem button onClick={()=>redirectTo('/nuevo-proyecto')} className={classes.nested}>
                 <ListItemIcon>
-                    <AddCircleIcon />
+                    <AddCircleIcon fontSize='small' />
                 </ListItemIcon>
                 <ListItemText secondary="Agregar nuevo" />
             </ListItem>
@@ -83,13 +83,13 @@ const Sidebar = () => {
             <List component="div" disablePadding>
                 <ListItem button onClick={()=>redirectTo('/empleados')}  className={classes.nested}>
                     <ListItemIcon>
-                        <ListIcon />
+                        <ListIcon fontSize='small' />
                     </ListItemIcon>
                     <ListItemText secondary="Todos" />
                 </ListItem>
                 <ListItem button onClick={()=>redirectTo('/nuevo-empleado')} className={classes.nested}>
                     <ListItemIcon>
-                        <AddCircleIcon />
+                        <AddCircleIcon fontSize='small' />
                     </ListItemIcon>
                     <ListItemText secondary="Agregar nuevo" />
                 </ListItem>
@@ -109,13 +109,13 @@ const Sidebar = () => {
             <List component="div" disablePadding>
                 <ListItem button onClick={()=>redirectTo('/clientes')} className={classes.nested}>
                     <ListItemIcon>
-                        <ListIcon  />
+                        <ListIcon fontSize='small'  />
                     </ListItemIcon>
                     <ListItemText secondary="Todos" />
                 </ListItem>
-                <ListItem button className={classes.nested}>
+                <ListItem button onClick={()=>redirectTo('/nuevo-cliente')} className={classes.nested}>
                     <ListItemIcon>
-                        <AddCircleIcon />
+                        <AddCircleIcon fontSize='small' />
                     </ListItemIcon>
                     <ListItemText secondary="Agregar nuevo" />
                 </ListItem>
@@ -123,7 +123,7 @@ const Sidebar = () => {
         </Collapse>
         <Divider/>
         <Box paddingX={2} paddingTop={2} >
-            <Button startIcon={<ExitToAppIcon/>}  color='secondary' fullWidth={true} variant='contained' >Cerrar sesión</Button>
+            <Button startIcon={<ExitToAppIcon/>}  color='primary' fullWidth={true} variant='contained' >Cerrar sesión</Button>
         </Box>
         
       </List>

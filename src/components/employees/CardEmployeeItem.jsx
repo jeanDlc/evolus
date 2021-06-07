@@ -25,7 +25,7 @@ const CardEmployeeItem =({employee}) => {
         <Card>
             <CardActionArea onClick={()=>redirectTo(`/empleado/${employee.idEmpleado}`)} >
                 <CardContent>
-                    <Typography gutterBottom component='h3' variant='h5'>
+                    <Typography gutterBottom component='h3' variant='h5' style={{fontWeight:'bold'}} >
                         {employee.nombre}  {employee.apellidos}
                     </Typography>
                     <Typography gutterBottom >Técnico automotriz </Typography>

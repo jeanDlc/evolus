@@ -1,9 +1,11 @@
-import { Button, Card, CardContent, Container, FormControl, FormHelperText, Grid, Input, InputLabel, TextField, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, Container, FormControl, FormControlLabel, FormHelperText, Grid, Input, InputLabel, TextField, Typography , Checkbox, FormLabel } from '@material-ui/core';
 import {format} from 'date-fns';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import FormGroup from '@material-ui/core/FormGroup';
+import employeesArrayJson from '../../lib/employeesArray.json';
 import React from 'react';
 
 const FormNewProject = () => {
@@ -12,7 +14,7 @@ const FormNewProject = () => {
         console.log('create new project')
     }
     return ( 
-        <Container maxWidth='sm' style={{marginTop:50}} >
+        <Container maxWidth='md' style={{marginTop:50}} >
             <Card >
                 <CardContent component='form' onSubmit={createNewProject} >
                     <Typography style={{fontWeight:'bold'}} component='h1' variant='h4' gutterBottom >Nuevo Proyecto</Typography>
@@ -33,6 +35,7 @@ const FormNewProject = () => {
                                     label="Inicio de proyecto"
                                     type="date"
                                     name='fecha_inicio'
+                                    color='secondary'
                                     defaultValue={format(new Date(),'yyyy-MM-dd')}
                                     InputLabelProps={{
                                     shrink: true,
@@ -49,6 +52,7 @@ const FormNewProject = () => {
                                     label="Fin de proyecto"
                                     type="date"
                                     name='fecha_fin'
+                                    color='secondary'
                                     defaultValue={format(new Date(),'yyyy-MM-dd')}
                                     InputLabelProps={{
                                     shrink: true,
@@ -83,7 +87,20 @@ const FormNewProject = () => {
                             </FormControl>
                         </Grid>
                     </Grid>
-                    <Button startIcon={ <AddCircleIcon/>} type='submit' variant='contained' color='secondary' fullWidth >Crear</Button>
+                    <FormControl component='fieldset' style={{marginBottom:18}} >
+                        <FormLabel component='legend'  color='secondary' >Equipo</FormLabel>
+                        <FormGroup row >
+                            
+                            {employeesArrayJson.empleados.map(employee=>(
+                                <FormControlLabel 
+                                    control={<Checkbox  name='' />}
+                                    label={`${employee.nombre} ${employee.apellidos} `}
+                                />
+                            ))}
+                            
+                        </FormGroup>
+                    </FormControl>
+                    <Button startIcon={ <AddCircleIcon/>} type='submit' variant='contained' color='primary' fullWidth >Guardar</Button>
                 </CardContent>
             </Card>
             

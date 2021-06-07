@@ -1,4 +1,4 @@
-import { Box, Card, CardActions, CardContent, Container, Divider, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Card, CardActions, CardContent, Container, Divider, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import List from '@material-ui/core/List';
@@ -10,10 +10,11 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
 import HomeIcon from '@material-ui/icons/Home';
-import Btn from '../ui/Btn';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import CheckIcon from '@material-ui/icons/Check';
 import WorkIcon from '@material-ui/icons/Work';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 const ProjectPage = () => {
     
     const params=useParams();
@@ -100,10 +101,14 @@ const ProjectPage = () => {
                 <CardActions>
                     <Grid  container spacing={2} style={{marginBottom:5}} >
                         <Grid item md={6} >
-                            <Btn fullWidth={true}  color='secondary'>Editar empleado</Btn>
+                            <Button variant='contained' color='primary' fullWidth startIcon={
+                                <EditIcon/>
+                            } > Editar </Button>
                         </Grid>
                         <Grid item md={6} >
-                            <Btn  fullWidth={true}  color='red' >Eliminar empleado</Btn>
+                            <Button variant='contained' color='secondary' fullWidth startIcon={
+                                <DeleteIcon/>
+                            } > Eliminar </Button>
                         </Grid>
                     </Grid>
                 </CardActions>

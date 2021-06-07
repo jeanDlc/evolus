@@ -1,5 +1,5 @@
-import { Box, Button, Card, CardContent, Container, Divider, Grid, Typography } from '@material-ui/core';
-import React from 'react';
+import { Box, Button, Card, CardContent, Container, Divider, Grid, Typography, Collapse } from '@material-ui/core';
+import React, { useState } from 'react';
 import {useParams} from 'react-router-dom';
 import ProjectProgress from '../ui/ProjectProgress';
 import List from '@material-ui/core/List';
@@ -14,8 +14,13 @@ import tasksArray from '../../lib/tasksArray.json';
 import CardTaskList from '../Tasks/CardTaskList';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Btn from '../ui/Btn';
+import FormNewTask from '../Tasks/FormNewTask';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import useRedirecTo from '../../lib/hooks/useRedirecTo';
 const ProjectPage = () => {
+    const [showFormNewTask, setShowFormNewTask]=useState(false);
+    const redirectTo =useRedirecTo();
     const params=useParams();
     const idProyecto= params.id;
     console.log(idProyecto);
@@ -64,19 +69,19 @@ const ProjectPage = () => {
                             <Grid item xs={12}  md={6} lg={4}>
                                 <Typography component='h3' variant='h6' >Equipo</Typography>
                                 <List>
-                                    <ListItem button>
+                                    <ListItem button onClick={()=>redirectTo('/empleado/1')} >
                                         <ListItemIcon  >
                                             <PersonIcon/>
                                         </ListItemIcon>
                                         <ListItemText primary='Técnico automotriz' secondary='Jorge Salinas' />
                                     </ListItem>
-                                    <ListItem button>
+                                    <ListItem button onClick={()=>redirectTo('/empleado/1')} >
                                          <ListItemIcon>
                                             <PersonIcon/>
                                         </ListItemIcon>
                                         <ListItemText primary='Jefe de Taller'  secondary='Juan Perez' />
                                     </ListItem>
-                                    <ListItem button>
+                                    <ListItem button onClick={()=>redirectTo('/empleado/1')} >
                                         <ListItemIcon>
                                             <PersonIcon/>
                                         </ListItemIcon>
@@ -86,8 +91,14 @@ const ProjectPage = () => {
                             </Grid>
                             <Grid item xs={12}  md={6} lg={4} >
                                 <Typography component='h3' variant='h6' style={{marginBottom:20}} >Acciones</Typography>
-                                <Btn color='secondary' fullWidth={true} >Editar</Btn>
-                                <Btn color='red' fullWidth={true} >ELiminar</Btn>
+                                <Button color='primary' variant='contained' fullWidth startIcon={
+                                    <EditIcon/>
+                                } 
+                                    style={{marginBottom:18}}
+                                > Editar </Button>
+                                <Button color='secondary' variant='contained'  fullWidth startIcon={
+                                    <DeleteIcon/>
+                                } > Eliminar </Button>
                             </Grid>
                         </Grid>
                 </CardContent>
@@ -95,7 +106,14 @@ const ProjectPage = () => {
             <Box component='section' marginY={10} >
                 <Typography component='h3' variant='h4' gutterBottom > 
                    <FormatListBulletedIcon/>  Tareas</Typography>
-                   <Button style={{marginBottom:15}} startIcon={<AddCircleIcon/>} variant='contained' color='secondary' > Agregar tareas</Button>
+                    <Button style={{marginBottom:15}} 
+                        startIcon={<AddCircleIcon/>}       
+                        variant='contained' color='primary' 
+                        onClick={()=>setShowFormNewTask(true)}
+                    > Nueva tarea</Button>
+                   <Collapse in={showFormNewTask} >
+                        <FormNewTask/>
+                   </Collapse>
                 <CardTaskList tasksArray={tasksArray.tasks} />
             </Box>
         </Container>

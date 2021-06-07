@@ -4,7 +4,6 @@ import Layout from './components/Layout/Layout';
 import {BrowserRouter,Switch,Route} from "react-router-dom";
 import Home from './components/Home';
 import Login from './components/Login';
-import SignIn from './components/SignIn';
 import FormNewProject from './components/Projects/FormNewProject';
 import AllProjects from './components/Projects/AllProjects';
 import ProjectPage from './components/Projects/ProjectPage';
@@ -14,6 +13,8 @@ import ClientPage from './components/clients/ClientPage';
 import AllEmployees from './components/employees/AllEmployees';
 import EmployeePage from './components/employees/EmployeePage';
 import FormNewEmployee from './components/employees/FormNewEmployee';
+import FormNewClient from './components/clients/FormNewClient';
+import Page404 from './components/Page404';
 function App() {
   let theme = useTheme();
 theme = responsiveFontSizes(theme);
@@ -27,9 +28,6 @@ theme = responsiveFontSizes(theme);
                 </Route>
                 <Route exact path='/iniciar-sesion' >
                   <Login/>
-                </Route>
-                <Route exact path='/registrarse' >
-                  <SignIn/>
                 </Route>
                 <Route exact path='/nuevo-proyecto' >
                   <FormNewProject/>
@@ -49,6 +47,9 @@ theme = responsiveFontSizes(theme);
                 <Route path='/cliente/:id' >
                   <ClientPage/>
                 </Route>
+                <Route path='/nuevo-cliente' >
+                  <FormNewClient/>
+                </Route>
                 <Route path='/empleados' >
                   <AllEmployees/>
                 </Route>
@@ -57,6 +58,9 @@ theme = responsiveFontSizes(theme);
                 </Route>
                 <Route path='/nuevo-empleado' >
                   <FormNewEmployee/>
+                </Route>
+                <Route path='*' >
+                  <Page404/>
                 </Route>
             </Switch>
         </Layout>

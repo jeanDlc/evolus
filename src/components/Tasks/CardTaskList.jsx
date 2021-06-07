@@ -2,7 +2,7 @@ import { Grid } from '@material-ui/core';
 import React from 'react';
 import CardTaskItem from './CardTaskItem';
 const CardTaskList = ({tasksArray}) => {
-    console.log(tasksArray);
+    
     return ( 
         <>
             <Grid container spacing={3} >

@@ -41,6 +41,29 @@ const theme = createMuiTheme({
       list:{
         backgroundColor:'rgb(34, 43, 54)'
       }
+    },
+    MuiButton:{
+      containedPrimary:{
+        backgroundColor:indigo.A200,
+        "&:hover":{
+          backgroundColor:indigo[700]
+        },
+        color: 'white'
+      },
+      containedSecondary:{
+        backgroundColor:red.A200,
+        "&:hover":{
+          backgroundColor:red[700]
+        }
+      },
+      contained:{
+        backgroundColor:green[600],
+        color: 'white',
+        "&:hover":{
+          backgroundColor:green[700]
+        }
+      }
+      
     }
   }
   

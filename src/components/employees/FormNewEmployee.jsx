@@ -89,7 +89,7 @@ const FormNewEmployee = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <FormControl color='secondary'  margin='normal' fullWidth={true} >
-                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <InputLabel htmlFor="password">Contraseña</InputLabel>
                                 <Input startAdornment={
                                     <InputAdornment>
                                         <LockIcon/>
@@ -116,9 +116,9 @@ const FormNewEmployee = () => {
                         <Grid item xs={12} md={6}>
                             <Button startIcon={<AddCircleIcon/>} variant='contained'
                                 fullWidth={true}
-                                color='secondary' 
+                                color='primary' 
                                 type='submit'
-                            >Agregar nuevo empleado</Button>
+                            >Guardar</Button>
                         </Grid>
                     </Grid>
                     
