@@ -8,7 +8,7 @@ const AllEmployees = () => {
     const [employeeList, setEmployeeList]=useState([]);
     useEffect(()=>{
         setEmployeeList(employeesArrayJson.empleados)
-    })
+    },[])
     return ( 
         <>
             <Container component='main' >

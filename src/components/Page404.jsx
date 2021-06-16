@@ -14,6 +14,7 @@ const Page404 = () => {
             <Box textAlign='center' marginY={10}  >
                 <img src='https://material-kit-pro-react.devias.io/static/error/error404_dark.svg' 
                     style={{maxWidth:'100%'}}
+                    alt="404"
                 />
             </Box>
             <Box textAlign='center' >

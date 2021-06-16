@@ -3,7 +3,6 @@ import {useParams} from 'react-router-dom';
 import { Box, Button, Card, CardContent, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import EditIcon from '@material-ui/icons/Edit';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Switch from '@material-ui/core/Switch';
 import WarningIcon from '@material-ui/icons/Warning';

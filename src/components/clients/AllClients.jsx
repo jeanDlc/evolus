@@ -1,14 +1,19 @@
 import {   Container, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import clientArrayJson from '../../lib/clientsArray.json';
 import CardClientList from './CardClientList';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-
+import {getClients} from '../../lib/services/client';
 const AllClients = () => {
     const [clientList, setClientList]=useState([]);
     useEffect(()=>{
-        setClientList(clientArrayJson.clientes)
-    })
+        let isMounted=true;
+        getClients()
+        .then(res=>{
+            if(isMounted) setClientList(res)
+        })
+        .catch(error=>console.log(error))
+        return ()=>isMounted=false;
+    },[])
     return ( 
         <>
             <Container component='main' >

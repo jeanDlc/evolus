@@ -1,4 +1,4 @@
-import {Box, Button, Card, CardActionArea, CardActions, CardContent, Grid, Typography } from '@material-ui/core';
+import {Box, Button, Card, CardActionArea, CardActions, CardContent,  Typography } from '@material-ui/core';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import React from 'react';

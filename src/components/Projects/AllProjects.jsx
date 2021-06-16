@@ -7,7 +7,7 @@ const AllProjects = () => {
     const [projectList, setProjectList]=useState([]);
     useEffect(()=>{
         setProjectList(projectArrayJson.proyectos)
-    })
+    },[])
     return ( 
         <>
             <Container component='main' >

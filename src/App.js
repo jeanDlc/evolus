@@ -13,11 +13,14 @@ import ClientPage from './components/clients/ClientPage';
 import AllEmployees from './components/employees/AllEmployees';
 import EmployeePage from './components/employees/EmployeePage';
 import FormNewEmployee from './components/employees/FormNewEmployee';
-import FormNewClient from './components/clients/FormNewClient';
+import FormClient from './components/clients/FormClient';
 import Page404 from './components/Page404';
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from 'react-toastify';
 function App() {
   let theme = useTheme();
-theme = responsiveFontSizes(theme);
+  theme = responsiveFontSizes(theme);
+  
   return (
     <ThemeProvider theme={theme} >
       <BrowserRouter>
@@ -48,7 +51,10 @@ theme = responsiveFontSizes(theme);
                   <ClientPage/>
                 </Route>
                 <Route path='/nuevo-cliente' >
-                  <FormNewClient/>
+                  <FormClient/>
+                </Route>
+                <Route path='/actualizar-cliente/:id' >
+                  <FormClient/>
                 </Route>
                 <Route path='/empleados' >
                   <AllEmployees/>
@@ -64,6 +70,7 @@ theme = responsiveFontSizes(theme);
                 </Route>
             </Switch>
         </Layout>
+        <ToastContainer/>
       </BrowserRouter>
     </ThemeProvider>
   );

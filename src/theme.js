@@ -64,6 +64,11 @@ const theme = createMuiTheme({
         }
       }
       
+    },
+    MuiDialog:{
+      paper:{
+        backgroundColor:'rgb(34, 43, 54)'
+      }
     }
   }
   

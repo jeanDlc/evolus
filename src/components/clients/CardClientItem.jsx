@@ -30,7 +30,7 @@ const CardClientItem = ({client}) => {
     const redirectTo=useRedirecTo();
     return ( 
         <Card >
-            <CardActionArea onClick={()=>redirectTo(`/cliente/${client.idCliente}`)} >
+            <CardActionArea onClick={()=>redirectTo(`/cliente/${client.id}`)} >
                 <CardContent>
                     <Typography component='h3' gutterBottom variant='h5' >{client.nombre} {client.apellidos} </Typography>
                     <Box display='flex' alignItems='center' >

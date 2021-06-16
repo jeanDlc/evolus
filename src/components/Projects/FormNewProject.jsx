@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Container, FormControl, FormControlLabel, FormHelperText, Grid, Input, InputLabel, TextField, Typography , Checkbox, FormLabel } from '@material-ui/core';
+import { Button, Card, CardContent, Container, FormControl, FormControlLabel, FormHelperText, Grid, Input, InputLabel, TextField, Typography , Checkbox, FormLabel, Select, MenuItem } from '@material-ui/core';
 import {format} from 'date-fns';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
@@ -6,6 +6,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import FormGroup from '@material-ui/core/FormGroup';
 import employeesArrayJson from '../../lib/employeesArray.json';
+import clientsArrayJson from '../../lib/clientsArray.json';
 import React from 'react';
 
 const FormNewProject = () => {
@@ -15,7 +16,7 @@ const FormNewProject = () => {
     }
     return ( 
         <Container maxWidth='md' style={{marginTop:50}} >
-            <Card >
+            <Card  style={{marginBottom:28}} >
                 <CardContent component='form' onSubmit={createNewProject} >
                     <Typography style={{fontWeight:'bold'}} component='h1' variant='h4' gutterBottom >Nuevo Proyecto</Typography>
                     <Typography gutterBottom>Llena el formulario para crear un nuevo proyecto</Typography>
@@ -86,6 +87,18 @@ const FormNewProject = () => {
                                     id="nombre" name='nombre' type='text' />
                             </FormControl>
                         </Grid>
+                        <Grid item xs={12} md={6} >
+                            <FormControl color='secondary' margin='normal' fullWidth={true}>
+                                <InputLabel id="label-select-client" >Cliente</InputLabel>
+                                <Select
+                                    labelId="label-select-client"
+                                >
+                                    {clientsArrayJson.clientes.map(client=>(
+                                        <MenuItem value={client.idCliente} > {client.nombre} {client.apellidos} </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
                     </Grid>
                     <FormControl component='fieldset' style={{marginBottom:18}} >
                         <FormLabel component='legend'  color='secondary' >Equipo</FormLabel>
@@ -100,6 +113,7 @@ const FormNewProject = () => {
                             
                         </FormGroup>
                     </FormControl>
+                    
                     <Button startIcon={ <AddCircleIcon/>} type='submit' variant='contained' color='primary' fullWidth >Guardar</Button>
                 </CardContent>
             </Card>
