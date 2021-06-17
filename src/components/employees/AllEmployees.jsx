@@ -1,21 +1,17 @@
 import {   Container, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import employeesArrayJson from '../../lib/employeesArray.json';
+import React from 'react';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import CardEmployeeList from './CardEmployeeList';
-
+import useEmployees from '../../lib/hooks/useEmployees';
 const AllEmployees = () => {
-    const [employeeList, setEmployeeList]=useState([]);
-    useEffect(()=>{
-        setEmployeeList(employeesArrayJson.empleados)
-    },[])
+    const employees=useEmployees();
     return ( 
         <>
             <Container component='main' >
                 <Typography style={{marginTop:30, marginBottom:30}} component='h1' variant='h3' align='center' >
                     <FormatListBulletedIcon fontSize='large' /> Empleados</Typography>
                 
-                <CardEmployeeList employeesArray={employeeList} />
+                <CardEmployeeList employeesArray={employees} />
             </Container>
         </>
      );

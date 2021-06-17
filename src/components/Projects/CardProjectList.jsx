@@ -5,7 +5,7 @@ const CardProjectList =     ({projectsArray}) => {
     return ( 
         <Grid container spacing={3} >
             {projectsArray.map(project=>(
-                <Grid key={project.idProyecto} item md={6}  lg={4} >
+                <Grid key={project.id} item md={6}  lg={4} >
                     <CardProjectItem project={project} />
                 </Grid>
             ))}

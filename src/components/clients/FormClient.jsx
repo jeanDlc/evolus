@@ -32,9 +32,11 @@ const FormNewClient = () => {
                 redirectTo('/clientes');
                 toast.error(error.response?.data?.error || 'Error');
             })
+        }else{
+            if(isMounted) setClient(initialState)
         }
         return ()=>isMounted=false;
-    },[]);
+    },[params.id]);
     const handleChange=e=>{
         setClient({
             ...client,

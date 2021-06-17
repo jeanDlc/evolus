@@ -23,12 +23,12 @@ const CardEmployeeItem =({employee}) => {
     const classes=useStyles();
     return ( 
         <Card>
-            <CardActionArea onClick={()=>redirectTo(`/empleado/${employee.idEmpleado}`)} >
+            <CardActionArea onClick={()=>redirectTo(`/empleado/${employee.id}`)} >
                 <CardContent>
                     <Typography gutterBottom component='h3' variant='h5' style={{fontWeight:'bold'}} >
                         {employee.nombre}  {employee.apellidos}
                     </Typography>
-                    <Typography gutterBottom >Técnico automotriz </Typography>
+                    <Typography gutterBottom >{ employee.Rol.nombre} </Typography>
                     <Box display='flex' alignItems='center' >
                         <PhoneIcon  className={classes.icon} />
                         <Typography gutterBottom variant="body2" color="textSecondary" component="p">

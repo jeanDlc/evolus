@@ -12,7 +12,7 @@ import AllClients from './components/clients/AllClients';
 import ClientPage from './components/clients/ClientPage';
 import AllEmployees from './components/employees/AllEmployees';
 import EmployeePage from './components/employees/EmployeePage';
-import FormNewEmployee from './components/employees/FormNewEmployee';
+import FormEmployee from './components/employees/FormEmployee';
 import FormClient from './components/clients/FormClient';
 import Page404 from './components/Page404';
 import 'react-toastify/dist/ReactToastify.css';
@@ -63,7 +63,10 @@ function App() {
                   <EmployeePage/>
                 </Route>
                 <Route path='/nuevo-empleado' >
-                  <FormNewEmployee/>
+                  <FormEmployee/>
+                </Route>
+                <Route path='/actualizar-empleado/:id' >
+                  <FormEmployee/>
                 </Route>
                 <Route path='*' >
                   <Page404/>

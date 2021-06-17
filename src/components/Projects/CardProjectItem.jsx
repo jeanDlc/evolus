@@ -26,14 +26,16 @@ const CardProjectItem = ({project}) => {
     const redirectTo=useRedirecTo();
     return ( 
         <Card >
-            <CardActionArea onClick={()=>redirectTo(`/proyecto/${project.idProyecto}`)} >
+            <CardActionArea onClick={()=>redirectTo(`/proyecto/${project.id}`)} >
                 <CardContent>
-                    <Typography component='h3' gutterBottom variant='h5' >{project.nombre} </Typography>
+                    <Typography component='h3' gutterBottom variant='h5' style={{textTransform:'capitalize'}} 
+                        >{project.nombre}  
+                    </Typography>
                     <Typography gutterBottom variant="body2" color="textSecondary" component="p">
                         {truncatePhrase(project.descripcion)}
                     </Typography>
                     <Typography  variant="body2" component="p">
-                        <span style={{fontWeight:'bold'}} >Matrícula: </span> {project.numMatricula}
+                        <span style={{fontWeight:'bold'}} >Matrícula: </span> {project.num_matricula}
                     </Typography>
                 </CardContent>
             </CardActionArea>
