@@ -1,6 +1,5 @@
 import {  Container, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import projectArrayJson from '../../lib/projectArray.json';
+import React from 'react';
 import CardProjectList from './CardProjectList';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import useProjects from '../../lib/hooks/useProjects';

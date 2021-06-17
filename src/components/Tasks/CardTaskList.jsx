@@ -7,7 +7,7 @@ const CardTaskList = ({tasksArray}) => {
         <>
             <Grid container spacing={3} >
                 {tasksArray.map(task=>(
-                    <Grid item key={task.idTarea} xs={12} md={6} lg={4}>
+                    <Grid item key={task.id} xs={12} md={6} lg={4}>
                         <CardTaskItem task={task} />
                     </Grid>
                 ))}
