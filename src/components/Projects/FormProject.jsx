@@ -5,28 +5,97 @@ import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import FormGroup from '@material-ui/core/FormGroup';
-import employeesArrayJson from '../../lib/employeesArray.json';
-import clientsArrayJson from '../../lib/clientsArray.json';
-import React from 'react';
-
-const FormNewProject = () => {
-    const createNewProject=e=>{
+import useClients from '../../lib/hooks/useClients';
+import React,{useState} from 'react';
+import useEmployees from '../../lib/hooks/useEmployees';
+import { newProject } from '../../lib/services/project';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import useRedirecTo from '../../lib/hooks/useRedirecTo';
+const FormProject = () => {
+    const params=useParams();
+    const redirectTo=useRedirecTo();
+    const today=format(new Date(),'yyyy-MM-dd');
+    const initialState={
+        nombre:'',
+        fecha_inicio:today,
+        fecha_fin:today,
+        descripcion:'',
+        num_matricula:'',
+        monto:0,
+        empleados:[],
+        ClienteId:''
+    }
+    const [project, setProject]=useState(initialState);
+    const employees=useEmployees();
+    const {clients}=useClients();
+    const handleChange=e=>{
+        console.log('cambio');
         e.preventDefault();
-        console.log('create new project')
+        setProject({
+            ...project,
+            [e.target.name]:e.target.value
+        })
+    }
+    const handleChangeCheckEmployees=id=>{
+        const employeesIdList=project.empleados;
+        if(employeesIdList.includes(id)){
+            //eliminar el id
+            setProject({
+                ...project,
+                empleados:employeesIdList.filter(idEmp=>idEmp!==id)
+            })
+        }else{
+            //agregar el id
+            setProject({
+                ...project,
+                empleados:[...employeesIdList, id]
+            })
+        }
+        
+    }
+    const handleSubmit=async e=>{
+        e.preventDefault();
+        console.log(project)
+        try {
+            let res;
+            if(params.id){
+                //editar proyecto
+
+            }else{
+                //nuevo proyecto
+                res=await newProject(project)
+            }
+            toast.success(res.msg || 'Éxito');
+            redirectTo('/proyectos')
+        } catch (error) {
+            if(error.response?.data?.errores){
+                const arrayErrors=error.response.data.errores;
+                arrayErrors.forEach(err=>toast.error(err.msg));
+            }else{
+                toast.error(error.response?.data?.error || 'Ocurrió un error');
+            }
+        }
     }
     return ( 
         <Container maxWidth='md' style={{marginTop:50}} >
-            <Card  style={{marginBottom:28}} >
-                <CardContent component='form' onSubmit={createNewProject} >
+            <Card component='main'  style={{marginBottom:28}} >
+                <CardContent component='form' onSubmit={handleSubmit} >
                     <Typography style={{fontWeight:'bold'}} component='h1' variant='h4' gutterBottom >Nuevo Proyecto</Typography>
                     <Typography gutterBottom>Llena el formulario para crear un nuevo proyecto</Typography>
                     <FormControl color='secondary'  margin='normal' fullWidth={true} >
                         <InputLabel htmlFor="nombre">Nombre del proyecto</InputLabel>
-                        <Input id="nombre" name='nombre' type='text' />
+                        <Input id="nombre" 
+                            onChange={handleChange}
+                            value={project.nombre}
+                            name='nombre' type='text' />
                     </FormControl>
                     <FormControl color='secondary' margin='normal' fullWidth={true} >
                         <InputLabel htmlFor="descripcion">Descripción del proyecto</InputLabel>
-                        <Input multiline rows={10}  id="descripcion" name='descripcion' type='text' />
+                        <Input multiline rows={10}  
+                            onChange={handleChange}
+                            value={project.descripcion}
+                            id="descripcion" name='descripcion' type='text' />
                     </FormControl>
                     <Grid container spacing={3} style={{marginBottom:15, marginTop:10}} >
                         <Grid item  xs={12} md={6} >
@@ -37,7 +106,8 @@ const FormNewProject = () => {
                                     type="date"
                                     name='fecha_inicio'
                                     color='secondary'
-                                    defaultValue={format(new Date(),'yyyy-MM-dd')}
+                                    value={project.fecha_inicio}
+                                    onChange={handleChange}
                                     InputLabelProps={{
                                     shrink: true,
                                     }}
@@ -54,7 +124,8 @@ const FormNewProject = () => {
                                     type="date"
                                     name='fecha_fin'
                                     color='secondary'
-                                    defaultValue={format(new Date(),'yyyy-MM-dd')}
+                                    value={project.fecha_fin}
+                                    onChange={handleChange}
                                     InputLabelProps={{
                                     shrink: true,
                                     }}
@@ -65,26 +136,30 @@ const FormNewProject = () => {
                         </Grid>
                         <Grid item xs={12} md={6} >
                             <FormControl color='secondary' margin='normal' fullWidth={true} >
-                                <InputLabel htmlFor="numMatricula">Número de matrícula</InputLabel>
+                                <InputLabel htmlFor="num_matricula">Número de matrícula</InputLabel>
                                 <Input 
                                     startAdornment={
                                         <InputAdornment position='start' >
                                             <DirectionsCarIcon/>
                                         </InputAdornment>
                                     }
-                                id="numMatricula" name='numMatricula' type='text' />
+                                    onChange={handleChange}
+                                    value={project.num_matricula}
+                                id="num_matricula" name='num_matricula' type='text' />
                             </FormControl>
                         </Grid>
                         <Grid item xs={12} md={6} >
                             <FormControl color='secondary' margin='normal' fullWidth={true} >
-                                <InputLabel htmlFor="nombre">Monto a pagar</InputLabel>
+                                <InputLabel htmlFor="monto">Monto a pagar</InputLabel>
                                 <Input 
                                     startAdornment={
                                         <InputAdornment position='start' >
                                             <MonetizationOnIcon/>
                                         </InputAdornment>
                                     }
-                                    id="nombre" name='nombre' type='text' />
+                                    onChange={handleChange}
+                                    value={project.monto}
+                                    id="monto" name='monto' type='number' />
                             </FormControl>
                         </Grid>
                         <Grid item xs={12} md={6} >
@@ -92,9 +167,16 @@ const FormNewProject = () => {
                                 <InputLabel id="label-select-client" >Cliente</InputLabel>
                                 <Select
                                     labelId="label-select-client"
+                                    onChange={handleChange}
+                                    value={project.ClienteId}
+                                    name='ClienteId'
+                                    
                                 >
-                                    {clientsArrayJson.clientes.map(client=>(
-                                        <MenuItem value={client.idCliente} > {client.nombre} {client.apellidos} </MenuItem>
+                                    {clients.map(client=>(
+                                        <MenuItem 
+                                            key={client.id}
+                                            value={client.id} 
+                                            > {client.nombre} {client.apellidos} </MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
@@ -104,9 +186,14 @@ const FormNewProject = () => {
                         <FormLabel component='legend'  color='secondary' >Equipo</FormLabel>
                         <FormGroup row >
                             
-                            {employeesArrayJson.empleados.map(employee=>(
+                            {employees.map(employee=>(
                                 <FormControlLabel 
-                                    control={<Checkbox  name='' />}
+                                    key={employee.id}
+                                    control={<Checkbox 
+                                        onChange={()=>handleChangeCheckEmployees(employee.id)}
+                                        name='empleados' 
+                                        checked={project.empleados.includes(employee.id)}
+                                    />}
                                     label={`${employee.nombre} ${employee.apellidos} `}
                                 />
                             ))}
@@ -122,4 +209,4 @@ const FormNewProject = () => {
      );
 }
  
-export default FormNewProject;
+export default FormProject;

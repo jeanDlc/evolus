@@ -12,3 +12,7 @@ export const getProjectTasks=async(idProject)=>{
     const res=await axios(`${url}/${idProject}/tareas`);
     return res.data;
 }
+export const newProject=async(project)=>{
+    const res=await axios.post(url, project);
+    return res.data;
+}

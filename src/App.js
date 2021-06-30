@@ -4,7 +4,7 @@ import Layout from './components/Layout/Layout';
 import {BrowserRouter,Switch,Route} from "react-router-dom";
 import Home from './components/Home';
 import Login from './components/Login';
-import FormNewProject from './components/Projects/FormNewProject';
+import FormProject from './components/Projects/FormProject';
 import AllProjects from './components/Projects/AllProjects';
 import ProjectPage from './components/Projects/ProjectPage';
 import TaskPage from './components/Tasks/TaskPage';
@@ -33,7 +33,10 @@ function App() {
                   <Login/>
                 </Route>
                 <Route exact path='/nuevo-proyecto' >
-                  <FormNewProject/>
+                  <FormProject/>
+                </Route>
+                <Route exact path='/editar-proyecto:id' >
+                  <FormProject/>
                 </Route>
                 <Route exact path='/proyectos' >
                   <AllProjects/>
