@@ -124,7 +124,10 @@ const ProjectPage = () => {
                             </Grid>
                             <Grid item xs={12}  md={6} lg={4} >
                                 <Typography component='h3' variant='h6' style={{marginBottom:20}} >Acciones</Typography>
-                                <Button color='primary' variant='contained' fullWidth startIcon={
+                                <Button color='primary' 
+                                    onClick={()=>redirectTo(`/editar-proyecto/${params.id}`)}
+                                    variant='contained' 
+                                    fullWidth startIcon={
                                     <EditIcon/>
                                 } 
                                     style={{marginBottom:18}}

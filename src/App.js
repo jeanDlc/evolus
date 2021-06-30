@@ -35,7 +35,7 @@ function App() {
                 <Route exact path='/nuevo-proyecto' >
                   <FormProject/>
                 </Route>
-                <Route exact path='/editar-proyecto:id' >
+                <Route exact path='/editar-proyecto/:id' >
                   <FormProject/>
                 </Route>
                 <Route exact path='/proyectos' >

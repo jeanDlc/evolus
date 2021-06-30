@@ -16,3 +16,8 @@ export const newProject=async(project)=>{
     const res=await axios.post(url, project);
     return res.data;
 }
+
+export const updateProject=async(id,project)=>{
+    const res=await axios.put(`${url}/${id}`, project);
+    return res.data;
+}

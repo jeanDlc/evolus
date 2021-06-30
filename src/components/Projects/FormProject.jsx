@@ -3,12 +3,13 @@ import {format} from 'date-fns';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import EditIcon from '@material-ui/icons/Edit';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import FormGroup from '@material-ui/core/FormGroup';
 import useClients from '../../lib/hooks/useClients';
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import useEmployees from '../../lib/hooks/useEmployees';
-import { newProject } from '../../lib/services/project';
+import { newProject,getProjectById,updateProject } from '../../lib/services/project';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
@@ -26,9 +27,40 @@ const FormProject = () => {
         empleados:[],
         ClienteId:''
     }
+    const [edicion,setEdicion]=useState(false);
     const [project, setProject]=useState(initialState);
     const employees=useEmployees();
     const {clients}=useClients();
+    useEffect(()=>{
+        let isMounted=true;
+        if(params.id){
+            //estamos en edición
+            if(isMounted) setEdicion(true)
+            //buscar el proyecto que queremos editar
+            getProjectById(params.id)
+            .then(res=>{
+                const {nombre,descripcion,fecha_inicio,fecha_fin,num_matricula,monto,pagado,
+                    ClienteId,Empleados}=res;
+                if(!isMounted) return;
+                setProject({
+                    nombre,
+                    fecha_inicio: format(new Date(fecha_inicio),'yyyy-MM-dd'),
+                    fecha_fin:format(new Date(fecha_fin),'yyyy-MM-dd') ,
+                    descripcion,
+                    num_matricula,
+                    monto,
+                    empleados:Empleados.map(emp=>emp.id),
+                    ClienteId,
+                    pagado
+                })
+            })
+            .catch(error=>{
+                console.log(error.response);
+                toast.error(error.response?.data?.error || 'Error');
+            })
+        }
+        return ()=>isMounted=false;
+    },[params.id]);
     const handleChange=e=>{
         console.log('cambio');
         e.preventDefault();
@@ -61,13 +93,15 @@ const FormProject = () => {
             let res;
             if(params.id){
                 //editar proyecto
-
+                res=await updateProject(params.id, project);
+                redirectTo(`/proyecto/${params.id}`);
             }else{
                 //nuevo proyecto
                 res=await newProject(project)
+                redirectTo('/proyectos')
             }
             toast.success(res.msg || 'Éxito');
-            redirectTo('/proyectos')
+            
         } catch (error) {
             if(error.response?.data?.errores){
                 const arrayErrors=error.response.data.errores;
@@ -81,8 +115,11 @@ const FormProject = () => {
         <Container maxWidth='md' style={{marginTop:50}} >
             <Card component='main'  style={{marginBottom:28}} >
                 <CardContent component='form' onSubmit={handleSubmit} >
-                    <Typography style={{fontWeight:'bold'}} component='h1' variant='h4' gutterBottom >Nuevo Proyecto</Typography>
-                    <Typography gutterBottom>Llena el formulario para crear un nuevo proyecto</Typography>
+                    <Typography style={{fontWeight:'bold'}} component='h1' variant='h4' gutterBottom >
+                        {edicion? 'Editar proyecto': 'Nuevo Proyecto'}
+                    </Typography>
+                    <Typography gutterBottom>
+                        Llena el formulario para {edicion? 'editar el proyecto': 'crear un nuevo proyecto'} </Typography>
                     <FormControl color='secondary'  margin='normal' fullWidth={true} >
                         <InputLabel htmlFor="nombre">Nombre del proyecto</InputLabel>
                         <Input id="nombre" 
@@ -201,7 +238,11 @@ const FormProject = () => {
                         </FormGroup>
                     </FormControl>
                     
-                    <Button startIcon={ <AddCircleIcon/>} type='submit' variant='contained' color='primary' fullWidth >Guardar</Button>
+                    <Button 
+                        startIcon={edicion? <EditIcon/>:<AddCircleIcon/>} 
+                        type='submit' variant='contained' 
+                        color='primary' fullWidth 
+                    >Guardar {edicion && 'cambios'} </Button>
                 </CardContent>
             </Card>
             
