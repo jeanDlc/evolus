@@ -24,7 +24,7 @@ const useForm = (initialState, validate, fn) => {
         setErrors(validationErrors);
         setSubmit(true);
     }
-    return {errors, handleChange,handleSubmit, fields}
+    return {errors, handleChange,handleSubmit, fields,setFields}
 }
  
 export default useForm;
