@@ -157,7 +157,7 @@ const ProjectPage = () => {
                         onClick={()=>setShowFormNewTask(true)}
                     > Nueva tarea</Button>
                    <Collapse in={showFormNewTask} >
-                        <FormNewTask/>
+                        <FormNewTask project={project} />
                    </Collapse>
                 
                 {tasks.length>0? (

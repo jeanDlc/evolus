@@ -25,3 +25,8 @@ export const deleteProject=async(idProject)=>{
     const res=await axios.delete(`${url}/${idProject}`);
     return res.data;
 }
+
+export const newProjectTask=async(idProject,task)=>{
+    const res=await axios.post(`${url}/${idProject}/tareas`, task);
+    return res.data;
+}
