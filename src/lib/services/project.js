@@ -4,8 +4,8 @@ export const getProjects=async()=>{
     const res=await axios(url);
     return res.data;
 }
-export const getProjectById=async(id)=>{
-    const res=await axios(`${url}/${id}`);
+export const getProjectById=async(idProject)=>{
+    const res=await axios(`${url}/${idProject}`);
     return res.data;
 }
 export const getProjectTasks=async(idProject)=>{
@@ -17,7 +17,11 @@ export const newProject=async(project)=>{
     return res.data;
 }
 
-export const updateProject=async(id,project)=>{
-    const res=await axios.put(`${url}/${id}`, project);
+export const updateProject=async(idProject,project)=>{
+    const res=await axios.put(`${url}/${idProject}`, project);
+    return res.data;
+}
+export const deleteProject=async(idProject)=>{
+    const res=await axios.delete(`${url}/${idProject}`);
     return res.data;
 }

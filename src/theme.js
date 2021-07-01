@@ -69,7 +69,8 @@ const theme = createMuiTheme({
       paper:{
         backgroundColor:'rgb(34, 43, 54)'
       }
-    }
+    },
+    
   }
   
 });

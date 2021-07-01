@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Container, Divider, Grid, Typography, Collapse } from '@material-ui/core';
+import { Box, Button, Card, CardContent, Container, Divider, Grid, Typography, Collapse, Dialog } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import ProjectProgress from '../ui/ProjectProgress';
@@ -20,8 +20,10 @@ import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { toast } from 'react-toastify';
 import UseOneProject from '../../lib/hooks/useOneProject';
+import {format} from 'date-fns';
+import ConfirmDeleteProject from './ConfirmDeleteProject';
 const ProjectPage = () => {
-    
+    const [openDeleteDialog,setOpenDeleteDialog]=useState(false);
     const [showFormNewTask, setShowFormNewTask]=useState(false);
     const redirectTo =useRedirecTo();
     const params=useParams();
@@ -53,8 +55,12 @@ const ProjectPage = () => {
                         <Typography style={{marginBottom:15}} component='h3' variant='h6'  >Progreso</Typography>
                         <ProjectProgress progress={70} />
                         <Box display='flex' alignItems='center' marginTop={1} justifyContent='space-between' >
-                            <Typography color='textSecondary' >{project.fecha_inicio}</Typography>
-                            <Typography color='textSecondary' > {project.fecha_fin} </Typography>
+                            <Typography color='textSecondary' 
+                                >{format(new Date(project.fecha_inicio) ,'yyyy-MM-dd')}
+                            </Typography>
+                            <Typography color='textSecondary' 
+                                > {format(new Date(project.fecha_fin),'yyyy-MM-dd')}
+                            </Typography>
                         </Box>
                     </Box>
                     <Grid container component='section' spacing={3} >
@@ -132,7 +138,10 @@ const ProjectPage = () => {
                                 } 
                                     style={{marginBottom:18}}
                                 > Editar </Button>
-                                <Button color='secondary' variant='contained'  fullWidth startIcon={
+                                <Button color='secondary' 
+                                    variant='contained'  
+                                    onClick={()=>setOpenDeleteDialog(true)}
+                                    fullWidth startIcon={
                                     <DeleteIcon/>
                                 } > Eliminar </Button>
                             </Grid>
@@ -157,6 +166,17 @@ const ProjectPage = () => {
                     <Typography>Aún no cuentas con tareas</Typography>
                 ) }
             </Box>
+            <Dialog 
+                open={openDeleteDialog}
+                onClose={()=>setOpenDeleteDialog(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <ConfirmDeleteProject
+                    setOpen={setOpenDeleteDialog}
+                    idProject={params.id}
+                />
+            </Dialog>
         </Container>
      );
 }
