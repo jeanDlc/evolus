@@ -10,7 +10,6 @@ import useRedirecTo from '../../lib/hooks/useRedirecTo';
 const ConfirmDeleteClient = ({setOpen, idClient}) => {
     const redirectTo=useRedirecTo();
     const handleDelete=()=>{
-        console.log('delete')
         deleteClient(idClient)
         .then(res=>{
             redirectTo('/clientes');

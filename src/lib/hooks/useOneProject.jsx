@@ -11,6 +11,7 @@ const UseOneProject = (id) => {
         getProjectById(id)
         .then(res=>{
             if(isMounted){
+                console.log(res)
                 setProject(res);
                 setTasks(res.Tareas);
                 setClient(res.Cliente);

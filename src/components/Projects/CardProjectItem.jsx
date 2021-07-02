@@ -42,7 +42,7 @@ const CardProjectItem = ({project}) => {
             <CardActions>
                 <Box display='flex' alignItems='center' >
                     <Button color='secondary' style={{marginRight:20}} 
-                        onClick={()=>redirectTo(`/proyecto/${project.idProyecto}`)}  
+                        onClick={()=>redirectTo(`/proyecto/${project.id}`)}  
                     >
                         Ver más <ArrowForwardIosIcon style={{fontSize:15}} />
                     </Button>

@@ -8,3 +8,7 @@ export const updateTask=async(idTask,task)=>{
     const res=await axios.put(`${url}/${idTask}`,task);
     return res.data;
 }
+export const deleteTask=async(idTask)=>{
+    const res=await axios.delete(`${url}/${idTask}`);
+    return res.data;
+}

@@ -46,7 +46,7 @@ const CardEmployeeItem =({employee}) => {
             <CardActions>
                 <Box display='flex' alignItems='center' >
                     <Button color='secondary' style={{marginRight:20}} 
-                        onClick={()=>redirectTo(`/empleado/${employee.idEmpleado}`)}  
+                        onClick={()=>redirectTo(`/empleado/${employee.id}`)}  
                     >
                         Ver más <ArrowForwardIosIcon style={{fontSize:15}} />
                     </Button>

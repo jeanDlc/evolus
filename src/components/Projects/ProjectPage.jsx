@@ -29,6 +29,7 @@ const ProjectPage = () => {
     const {client,tasks,project,error,errorMessage}=UseOneProject(params.id);
     
     useEffect(()=>{
+        console.log('cambio')
         if(error){
             redirectTo('/proyectos');
             toast.error(errorMessage || 'Error');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useParams} from 'react-router-dom';
-import { Box, Button, Card, CardContent, Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, Card, CardContent, Container, Grid, makeStyles, Typography,Dialog  } from '@material-ui/core';
 import { format } from 'date-fns';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import EditIcon from '@material-ui/icons/Edit';
@@ -9,6 +9,7 @@ import Switch from '@material-ui/core/Switch';
 import WarningIcon from '@material-ui/icons/Warning';
 import useOneTask from '../../lib/hooks/useOneTask';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
+import ConfirmDeleteTask from './ConfirmDeleteTask';
 const useStyles = makeStyles((theme) => ({
     danger: {
       color: theme.palette.error.main
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const TaskPage = () => {
     const redirectTo=useRedirecTo();
     const [done,setDone]=useState(false);
+    const [openDelete, setOpenDelete]=useState(false);
     const classes=useStyles();
     const params=useParams();
     const {task,error}=useOneTask(params.id)
@@ -76,14 +78,23 @@ const TaskPage = () => {
                                     >Editar</Button>
                                 </Grid>
                                 <Grid item xs={12} md={6} >
-                                    <Button color='secondary' variant='contained' fullWidth 
+                                    <Button color='secondary' 
+                                        onClick={()=>setOpenDelete(true)}
+                                        variant='contained' fullWidth 
                                         startIcon={<DeleteIcon/> }
                                     >Eliminar</Button>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                    
+                    <Dialog
+                        open={openDelete}
+                        onClose={()=>setOpenDelete(false)}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <ConfirmDeleteTask setOpen={setOpenDelete} task={task} />
+                    </Dialog>
                 </CardContent>
             </Card>
         </Container>

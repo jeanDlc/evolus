@@ -51,7 +51,7 @@ const CardClientItem = ({client}) => {
             <CardActions>
                 <Box display='flex' alignItems='center' >
                     <Button color='secondary' style={{marginRight:20}} 
-                        onClick={()=>redirectTo(`/cliente/${client.idCliente}`)}  
+                        onClick={()=>redirectTo(`/cliente/${client.id}`)}  
                     >
                         Ver más <ArrowForwardIosIcon style={{fontSize:15}} />
                     </Button>
