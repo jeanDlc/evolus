@@ -1,13 +1,43 @@
-import { Box, Card, CardContent, FormControl,  Input, InputLabel, Typography, Button,TextField, Grid ,FormHelperText} from '@material-ui/core';
+import { Card, CardContent, FormControl,  Input, InputLabel, Typography, Button,TextField, Grid ,FormHelperText, Container} from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import { newProjectTask } from '../../lib/services/project';
 import useForm from '../../lib/hooks/useForm';
 import { newTaskValidation } from '../../lib/validation/forms/task';
-const FormNewTask = ({project}) => {
+import { useParams } from 'react-router-dom';
+import { getTaskById,updateTask } from '../../lib/services/task';
+import EditIcon from '@material-ui/icons/Edit';
+import { useLocation } from 'react-router-dom';
+function useQuery(){
+    return new URLSearchParams(useLocation().search);
+}
+const FormTask = ({ edit=false}) => {
+    let query = useQuery();
+    //idProject is required to create a new Task
+    const idProject=query.get('idProject');
+    
+    const params=useParams();
+    useEffect(()=>{
+        let isMounted=true;
+        if(edit){
+            //get the task we need to update
+            getTaskById(params.id)
+            .then(res=>{
+                isMounted && setTask({
+                    ...res,
+                    fecha_fin:format(new Date(res.fecha_fin), 'yyyy-MM-dd')
+                });
+            })
+            .catch(error=>{
+                redirecto('/proyectos')
+                toast.error(error.response?.data?.error || 'Ocurrió un error');
+            })
+        }
+        return ()=>isMounted=false;
+    },[edit]);
     const redirecto=useRedirecTo();
     const initialState={
         nombre:'',
@@ -15,28 +45,44 @@ const FormNewTask = ({project}) => {
         fecha_fin:format(new Date(), 'yyyy-MM-dd')
     }
     
-    const newTask=async()=>{
+    const handleTaskReq=async()=>{
+        //handle the request: update || create
         try {
-            const res=await newProjectTask(project.id, fields);
+            let res;
+            if(edit){
+                //update the task
+                res=await updateTask(params.id, task);
+            }else{
+                //create a new project's task
+                res=await newProjectTask(idProject, task);
+            }
             toast.success(res.msg || 'Éxito');
             redirecto(`/proyectos`);
         } catch (error) {
             if(error.response?.data?.errores){
+                //a list of errors
                 const arrayErrors=error.response.data.errores;
                 arrayErrors.forEach(err=>toast.error(err.msg));
             }else{
+                console.log(error)
+                //just one error message
                 toast.error(error.response?.data?.error || 'Ocurrió un error');
             }
         }
     }
-    const {errors,handleChange,handleSubmit, fields}=useForm(initialState,newTaskValidation, newTask);
+    const {errors,handleChange,handleSubmit, fields:task={},setFields:setTask }=useForm(initialState,newTaskValidation, handleTaskReq);
     
     return ( 
-        <Box maxWidth='600px' marginBottom={5} >
+        <Container maxWidth='sm' style={{marginTop:40}} >
             <Card>
                 <CardContent component='form' onSubmit={handleSubmit} >
-                    <Typography style={{fontWeight:'bold'}} component='h1' variant='h4' gutterBottom >Nueva Tarea</Typography>
-                    <Typography gutterBottom>Llena el formulario</Typography>
+                    <Typography style={{fontWeight:'bold'}} component='h1' variant='h4' gutterBottom >{edit? 'Editar': 'Nueva'} Tarea</Typography>
+                    <Typography gutterBottom
+                        >{edit? 
+                            'Edita los campos que requieras':
+                            'Llena el formulario' 
+                        }
+                    </Typography>
                     <Grid container  spacing={3} >
                         <Grid item xs={12} md={6} >
                             <FormControl 
@@ -44,7 +90,7 @@ const FormNewTask = ({project}) => {
                                 color='secondary'  margin='normal' fullWidth={true} >
                                 <InputLabel htmlFor="nombre">Nombre de la Tarea</InputLabel>
                                 <Input id="nombre" name='nombre' 
-                                    value={fields.nombre}
+                                    value={task.nombre}
                                     onChange={handleChange}
                                     type='text' />
                                     {errors.nombre && (
@@ -60,7 +106,7 @@ const FormNewTask = ({project}) => {
                                     id='fecha_fin' 
                                     name='fecha_fin'
                                     label='Fin de tarea'
-                                    value={fields.fecha_fin}
+                                    value={task.fecha_fin}
                                     onChange={handleChange}  
                                     type='date' 
                                     aria-describedby="helper-fecha-fin"
@@ -80,7 +126,7 @@ const FormNewTask = ({project}) => {
                         margin='normal' fullWidth={true} >
                         <InputLabel htmlFor="descripcion">Descripción de tarea</InputLabel>
                         <Input multiline rows={10}  id="descripcion" name='descripcion' 
-                            value={fields.descripcion}
+                            value={task.descripcion}
                             onChange={handleChange}
                             type='text' />
                             {errors.descripcion && (
@@ -90,15 +136,15 @@ const FormNewTask = ({project}) => {
                     
                     <FormControl color='secondary' margin='normal' fullWidth={true}>
                         <Button 
-                            startIcon={ <AddCircleIcon/>} 
+                            startIcon={ edit? <EditIcon/> :<AddCircleIcon/> } 
                             type='submit' variant='contained' 
                             color='primary' fullWidth 
-                        >Guardar</Button>
+                        >Guardar {edit && 'Cambios' } </Button>
                     </FormControl>
                 </CardContent>
             </Card>
-        </Box>
+        </Container>
      );
 }
  
-export default FormNewTask;
+export default FormTask;

@@ -17,6 +17,8 @@ import FormClient from './components/clients/FormClient';
 import Page404 from './components/Page404';
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from 'react-toastify';
+import FormTask from './components/Tasks/FormTask';
+import Prueba from './components/Prueba';
 function App() {
   let theme = useTheme();
   theme = responsiveFontSizes(theme);
@@ -47,6 +49,12 @@ function App() {
                 <Route path='/tarea/:id' >
                   <TaskPage/>
                 </Route>
+                <Route path='/nueva-tarea' >
+                  <FormTask/>
+                </Route>
+                <Route path='/editar-tarea/:id' >
+                  <FormTask edit={true} />
+                </Route>
                 <Route path='/clientes' >
                   <AllClients/>
                 </Route>
@@ -70,6 +78,9 @@ function App() {
                 </Route>
                 <Route path='/actualizar-empleado/:id' >
                   <FormEmployee/>
+                </Route>
+                <Route path='/prueba/:primero?/:segundo?' >
+                  <Prueba/>
                 </Route>
                 <Route path='*' >
                   <Page404/>

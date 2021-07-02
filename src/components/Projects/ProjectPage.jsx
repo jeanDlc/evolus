@@ -13,7 +13,6 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import CardTaskList from '../Tasks/CardTaskList';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import FormNewTask from '../Tasks/FormNewTask';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
@@ -24,7 +23,6 @@ import {format} from 'date-fns';
 import ConfirmDeleteProject from './ConfirmDeleteProject';
 const ProjectPage = () => {
     const [openDeleteDialog,setOpenDeleteDialog]=useState(false);
-    const [showFormNewTask, setShowFormNewTask]=useState(false);
     const redirectTo =useRedirecTo();
     const params=useParams();
 
@@ -154,12 +152,9 @@ const ProjectPage = () => {
                     <Button style={{marginBottom:15}} 
                         startIcon={<AddCircleIcon/>}       
                         variant='contained' color='primary' 
-                        onClick={()=>setShowFormNewTask(true)}
+                        onClick={()=>redirectTo(`/nueva-tarea?idProject=${project.id}`)}
                     > Nueva tarea</Button>
-                   <Collapse in={showFormNewTask} >
-                        <FormNewTask project={project} />
-                   </Collapse>
-                
+
                 {tasks.length>0? (
                     <CardTaskList tasksArray={tasks} />
                 ):(

@@ -8,6 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Switch from '@material-ui/core/Switch';
 import WarningIcon from '@material-ui/icons/Warning';
 import useOneTask from '../../lib/hooks/useOneTask';
+import useRedirecTo from '../../lib/hooks/useRedirecTo';
 const useStyles = makeStyles((theme) => ({
     danger: {
       color: theme.palette.error.main
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 const TaskPage = () => {
+    const redirectTo=useRedirecTo();
     const [done,setDone]=useState(false);
     const classes=useStyles();
     const params=useParams();
@@ -69,6 +71,7 @@ const TaskPage = () => {
                             <Grid container spacing={3} >
                                 <Grid item xs={12} md={6} >
                                     <Button  fullWidth color='primary' variant='contained' 
+                                        onClick={()=>redirectTo(`/editar-tarea/${params.id}`)}
                                         startIcon={<EditIcon/> }
                                     >Editar</Button>
                                 </Grid>

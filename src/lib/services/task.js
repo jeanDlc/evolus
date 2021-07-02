@@ -4,3 +4,7 @@ export const getTaskById=async(idTask)=>{
     const res=await axios(`${url}/${idTask}`);
     return res.data;
 }
+export const updateTask=async(idTask,task)=>{
+    const res=await axios.put(`${url}/${idTask}`,task);
+    return res.data;
+}
