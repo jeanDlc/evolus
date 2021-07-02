@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import {useParams} from 'react-router-dom';
 import { Box, Button, Card, CardContent, Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { format } from 'date-fns';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Switch from '@material-ui/core/Switch';
 import WarningIcon from '@material-ui/icons/Warning';
+import useOneTask from '../../lib/hooks/useOneTask';
 const useStyles = makeStyles((theme) => ({
     danger: {
       color: theme.palette.error.main
@@ -25,22 +27,23 @@ const TaskPage = () => {
     const [done,setDone]=useState(false);
     const classes=useStyles();
     const params=useParams();
-    console.log(params);
+    const {task,error}=useOneTask(params.id)
     const handleChange=()=>{
         setDone(!done);
     }
+    if(error) return 'Hubo un error'
     return ( 
         <Container component='main' >
             <Card style={{marginTop:25}} >
                 <CardContent>
                     <Typography className={classes.title} component='h2' variant='h4' align='center' >
-                        <span className={classes.bold} >Tarea: </span> Limpiar primera llanta
+                        <span className={classes.bold} >Tarea: </span> {task.nombre}
                     </Typography>
                     <Grid container spacing={3} >
                         <Grid xs={12} item md={6} >
                             <Typography className={classes.bold} component='h3' variant='h6' gutterBottom>Descripción</Typography>
                             <Typography color='textSecondary' >
-                                Ut sagittis mi a porta aliquam. Nam nec erat a orci iaculis feugiat eget vel quam. Donec accumsan, urna non elementum interdum, leo libero ultricies ipsum, eu rutrum ante nisi at ipsum. Integer tempor elit sit amet vestibulum pulvinar. Fusce quis nibh vestibulum, mollis quam vel, ultricies nunc. Phasellus sed libero imperdiet, faucibus mauris non, placerat ante. Maecenas lorem nunc, bibendum ac sagittis id, viverra quis magna
+                                {task.descripcion}
                             </Typography>   
                         </Grid>
                         <Grid xs={12} item md={6} >
@@ -54,7 +57,9 @@ const TaskPage = () => {
                             </Box>
                             <Box marginBottom={2} >
                                 <Typography component='h3' variant='h6' gutterBottom>
-                                    <span className={classes.bold}>Fecha fin</span>: 10 noviembre del 2020
+                                    <span className={classes.bold}>Fecha fin</span>:{
+                                        format(new Date(task.fecha_fin || null),'yyyy-MM-dd')
+                                    }
                                 </Typography>
                             </Box>
                             <Box display='flex' marginBottom={2} >

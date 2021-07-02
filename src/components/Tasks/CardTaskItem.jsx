@@ -20,7 +20,7 @@ const CardTaskItem = ({task}) => {
     
     return ( 
         <Card>
-            <CardActionArea onClick={()=>redirectTo(`/tarea/${task.idTarea}`)}  >
+            <CardActionArea onClick={()=>redirectTo(`/tarea/${task.id}`)}  >
                 <CardContent >
                     <Typography component='h3' variant='h5' >{task.nombre} </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
@@ -32,7 +32,7 @@ const CardTaskItem = ({task}) => {
             <CardActions>
                 <Box display='flex' alignItems='center' >
                     <Button color='secondary' style={{marginRight:20}} 
-                        onClick={()=>redirectTo(`/tarea/${task.idTarea}`)}  
+                        onClick={()=>redirectTo(`/tarea/${task.id}`)}  
                     >
                         Ver más <ArrowForwardIosIcon style={{fontSize:15}} />
                     </Button>
