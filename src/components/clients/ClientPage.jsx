@@ -13,27 +13,24 @@ import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {getClientById} from '../../lib/services/client';
 import { useState } from 'react';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import ConfirmDeleteClient from './ConfirmDeleteCliente';
+import useOneClient from '../../lib/hooks/useOneClient';
+import { toast } from 'react-toastify';
 const ProjectPage = () => {
     const redirectTo=useRedirecTo();
     const [open, setOpen]=useState(false);
-    const [client, setClient]=useState(null);
     const params=useParams();
     const idClient= params.id;
-
+    const {error, client, errorMessage}=useOneClient(idClient);
     useEffect(()=>{
-        let isMounted=true;
-        getClientById(idClient)
-        .then(res=>{
-            if(isMounted) setClient(res);
-        })
-        .catch(error=>console.log(error))
-        return ()=>isMounted=false;
-    },[]);
-    if(!client) return null;
+        if(error){
+            toast.error(errorMessage || 'Error');
+            redirectTo('/*'); //redirect to 404
+        }
+    },[error]);
+    
     return ( 
         <Container component='main' maxWidth='sm' style={{width:'100%'}} >
             <Card style={{marginTop:30, width:'100%'}} >

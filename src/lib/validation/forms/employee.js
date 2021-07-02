@@ -1,5 +1,5 @@
 export const validateClient=fields=>{
-    const {nombre,apellidos,num_telefonico,email,dni,ruc,direccion,pass,RolId,confirmar}=fields;
+    const {nombre,apellidos,num_telefonico,email,dni,pass,RolId,confirmar}=fields;
     let errors={};
     if(!nombre || nombre.trim()==='' || typeof nombre!=='string'){
         errors.nombre='Nombre no válido'

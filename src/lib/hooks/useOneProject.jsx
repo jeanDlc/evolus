@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import {getProjectById} from '../services/project';
 const UseOneProject = (id) => {
     const [project,setProject]=useState(null);
@@ -11,7 +11,6 @@ const UseOneProject = (id) => {
         getProjectById(id)
         .then(res=>{
             if(isMounted){
-                console.log(res)
                 setProject(res);
                 setTasks(res.Tareas);
                 setClient(res.Cliente);

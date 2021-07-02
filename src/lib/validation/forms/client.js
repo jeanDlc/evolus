@@ -1,5 +1,5 @@
 export const validateClient=(fields)=>{
-    const {nombre,apellidos,num_telefonico,email,dni,ruc,direccion}=fields;
+    const {nombre,apellidos,num_telefonico,email,dni}=fields;
     //ruc y dirección son opcionales
     let errors={};
     if(!nombre || nombre.trim()==='' || typeof nombre!=='string'){

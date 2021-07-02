@@ -80,7 +80,7 @@ const FormNewClient = () => {
                     <Grid container spacing={3} >
                         <Grid item xs={12} md={6}  >
                             <FormControl color='secondary'  
-                                error={errors.nombre}
+                                error={errors.nombre?true:false}
                                 margin='normal' fullWidth={true}>
                                 <InputLabel htmlFor='nombre' >Nombre de cliente</InputLabel>
                                 <Input id='nombre' name='nombre' 
@@ -94,7 +94,7 @@ const FormNewClient = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <FormControl color='secondary'  
-                                error={errors.apellidos}
+                                error={errors.apellidos?true:false}
                                 margin='normal' fullWidth={true} >
                                 <InputLabel htmlFor="apellidos">Apellidos del cliente</InputLabel>
                                 <Input id="apellidos" name='apellidos' type='text' 
@@ -108,7 +108,7 @@ const FormNewClient = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <FormControl color='secondary'  
-                                error={errors.num_telefonico}
+                                error={errors.num_telefonico?true:false}
                                 margin='normal' fullWidth={true} >
                                 <InputLabel htmlFor="num_telefonico">Número telefónico</InputLabel>
                                 <Input startAdornment={
@@ -126,7 +126,7 @@ const FormNewClient = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <FormControl color='secondary'  
-                                error={errors.email}
+                                error={errors.email?true:false}
                                 margin='normal' fullWidth={true} >
                                 <InputLabel htmlFor="email">Correó electrónico (email)</InputLabel>
                                 <Input startAdornment={
@@ -144,7 +144,7 @@ const FormNewClient = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <FormControl color='secondary'  
-                                error={errors.dni}
+                                error={errors.dni?true:false}
                                 margin='normal' fullWidth={true} >
                                 <InputLabel htmlFor="dni">DNI</InputLabel>
                                 <Input id="dni" name='dni' type='text' 
@@ -158,7 +158,7 @@ const FormNewClient = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <FormControl color='secondary'  
-                                error={errors.ruc}
+                                error={errors.ruc?true:false}
                                 margin='normal' fullWidth={true} >
                                 <InputLabel htmlFor="ruc">RUC</InputLabel>
                                 <Input id="ruc" name='ruc' type='text' 
@@ -172,7 +172,7 @@ const FormNewClient = () => {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <FormControl color='secondary'  
-                                error={errors.direccion}
+                                error={errors.direccion?true:false}
                                 margin='normal' fullWidth={true} >
                                 <InputLabel htmlFor="direccion">Dirección del cliente</InputLabel>
                                 <Input startAdornment={

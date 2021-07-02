@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Container, Divider, Grid, Typography, Collapse, Dialog } from '@material-ui/core';
+import { Box, Button, Card, CardContent, Container, Divider, Grid, Typography,  Dialog } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import ProjectProgress from '../ui/ProjectProgress';
@@ -29,7 +29,6 @@ const ProjectPage = () => {
     const {client,tasks,project,error,errorMessage}=UseOneProject(params.id);
     
     useEffect(()=>{
-        console.log('cambio')
         if(error){
             redirectTo('/proyectos');
             toast.error(errorMessage || 'Error');

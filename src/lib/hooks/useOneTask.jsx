@@ -3,6 +3,7 @@ import { getTaskById } from '../services/task';
 const useOneTask = (idTask) => {
     const [task,setTask]=useState({});
     const [error,setError]=useState(false);
+    const [errorMessage, setErrorMessage]=useState(null);
     useEffect(()=>{
         let isMounted=true;
         getTaskById(idTask)
@@ -10,11 +11,14 @@ const useOneTask = (idTask) => {
             if(isMounted) setTask(res)
         })
         .catch(err=>{
-            if(isMounted) setError(true)
+            if(isMounted){
+                setErrorMessage(err.response?.data?.error || 'Error')
+                setError(true)
+            }
         })
         return ()=>isMounted=false;
     },[]);
-    return {task,setTask,error,setError}
+    return {task,setTask,error,setError, errorMessage}
 }
  
 export default useOneTask;

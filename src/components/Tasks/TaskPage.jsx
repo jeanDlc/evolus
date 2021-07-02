@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import { Box, Button, Card, CardContent, Container, Grid, makeStyles, Typography,Dialog  } from '@material-ui/core';
 import { format } from 'date-fns';
@@ -10,6 +10,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import useOneTask from '../../lib/hooks/useOneTask';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import ConfirmDeleteTask from './ConfirmDeleteTask';
+import { toast } from 'react-toastify';
 const useStyles = makeStyles((theme) => ({
     danger: {
       color: theme.palette.error.main
@@ -31,11 +32,17 @@ const TaskPage = () => {
     const [openDelete, setOpenDelete]=useState(false);
     const classes=useStyles();
     const params=useParams();
-    const {task,error}=useOneTask(params.id)
+    const {task,error,errorMessage}=useOneTask(params.id)
     const handleChange=()=>{
         setDone(!done);
     }
-    if(error) return 'Hubo un error'
+    useEffect(()=>{
+        if(error){
+            toast.error(errorMessage || 'Error');
+            redirectTo('/*'); //redirect to 404
+        }
+    },[error]);
+
     return ( 
         <Container component='main' >
             <Card style={{marginTop:25}} >
