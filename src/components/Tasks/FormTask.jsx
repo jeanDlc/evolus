@@ -1,7 +1,6 @@
-import { Card, CardContent, FormControl,  Input, InputLabel, Typography, Button,TextField, Grid ,FormHelperText, Container} from '@material-ui/core';
+import { Card, CardContent, FormControl,  Input, InputLabel, Typography, Button, Grid ,FormHelperText, Container,Switch,FormControlLabel} from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import React,{useEffect} from 'react';
-import { format } from 'date-fns';
+import React,{useEffect, useState} from 'react';
 import { toast } from 'react-toastify';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import { newProjectTask } from '../../lib/services/project';
@@ -18,7 +17,7 @@ const FormTask = ({ edit=false}) => {
     let query = useQuery();
     //idProject is required to create a new Task
     const idProject=query.get('idProject');
-    
+    const [done,setDone]=useState(false);
     const params=useParams();
     useEffect(()=>{
         let isMounted=true;
@@ -26,12 +25,13 @@ const FormTask = ({ edit=false}) => {
             //get the task we need to update
             getTaskById(params.id)
             .then(res=>{
-                isMounted && setTask({
-                    ...res,
-                    fecha_fin:format(new Date(res.fecha_fin), 'yyyy-MM-dd')
-                });
+                if(isMounted){
+                    setDone(res.estado);
+                    setTask(res)
+                }
             })
             .catch(error=>{
+                console.log(error)
                 redirecto('/proyectos')
                 toast.error(error.response?.data?.error || 'Ocurrió un error');
             })
@@ -42,7 +42,7 @@ const FormTask = ({ edit=false}) => {
     const initialState={
         nombre:'',
         descripcion:'',
-        fecha_fin:format(new Date(), 'yyyy-MM-dd')
+        estado:false
     }
     
     const handleTaskReq=async()=>{
@@ -51,6 +51,7 @@ const FormTask = ({ edit=false}) => {
             let res;
             if(edit){
                 //update the task
+                task.estado=done;
                 res=await updateTask(params.id, task);
             }else{
                 //create a new project's task
@@ -76,8 +77,11 @@ const FormTask = ({ edit=false}) => {
         <Container maxWidth='sm' style={{marginTop:40}} >
             <Card>
                 <CardContent component='form' onSubmit={handleSubmit} >
-                    <Typography style={{fontWeight:'bold'}} component='h1' variant='h4' gutterBottom >{edit? 'Editar': 'Nueva'} Tarea</Typography>
+                    <Typography style={{fontWeight:'bold'}} component='h1' 
+                        variant='h4' gutterBottom 
+                    >{edit? 'Editar': 'Nueva'} Tarea</Typography>
                     <Typography gutterBottom
+                        style={{fontWeight:'bold', marginBottom:30}}
                         >{edit? 
                             'Edita los campos que requieras':
                             'Llena el formulario' 
@@ -98,27 +102,22 @@ const FormTask = ({ edit=false}) => {
                                     )}
                             </FormControl>
                         </Grid>
-                        <Grid item xs={12} md={6} >
-                            <FormControl color='secondary' 
-                                error={errors.fecha_fin ? true:false} 
-                                margin='normal' fullWidth={true} >
-                                <TextField
-                                    id='fecha_fin' 
-                                    name='fecha_fin'
-                                    label='Fin de tarea'
-                                    value={task.fecha_fin}
-                                    onChange={handleChange}  
-                                    type='date' 
-                                    aria-describedby="helper-fecha-fin"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        }}
+                        {edit && (
+                            <Grid item xs={12} md={6} >
+                                <FormControlLabel
+                                
+                                    control={
+                                        <Switch
+                                            checked={done}
+                                            onChange={()=>setDone(!done)}
+                                            name="estado"
+                                            color="secondary"
+                                        />
+                                    }
+                                    label={done? 'Terminado': 'No terminado' }
                                 />
-                                {errors.fecha_fin && (
-                                    <FormHelperText>{errors.fecha_fin}</FormHelperText>
-                                )}
-                            </FormControl>
-                        </Grid>
+                            </Grid>
+                        )}
                     </Grid>
                     
                     <FormControl color='secondary' 
