@@ -1,11 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
-import {  Button, Card, CardContent, Container, makeStyles, Typography,Dialog  } from '@material-ui/core';
+import {  Button, Card, CardContent, Container, makeStyles, Typography,Dialog, Box  } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useOneTask from '../../lib/hooks/useOneTask';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import ConfirmDeleteTask from './ConfirmDeleteTask';
+import WarningIcon from '@material-ui/icons/Warning';
+import DoneIcon from '@material-ui/icons/Done';
 import { toast } from 'react-toastify';
 const useStyles = makeStyles((theme) => ({
     bold:{
@@ -41,6 +43,23 @@ const TaskPage = () => {
                     <Typography color='textSecondary'style={{marginBottom:18}}  >
                         {task.descripcion}
                     </Typography> 
+                    <Box>
+                        <Typography className={classes.bold} component='h3' variant='h6'        gutterBottom>Estado</Typography>
+                        <Box display='flex' alignItems='center' marginBottom={3} >
+                            {task.estado? (
+                                <>
+                                    <DoneIcon color='secondary' style={{marginRight:10}} />
+                                    <Typography color='textSecondary' >Terminado</Typography>
+                                </>
+                            ) : (
+                                <>
+                                    <WarningIcon color='error' style={{marginRight:10}} /> 
+                                    <Typography  color='textSecondary' >Sin terminar</Typography>
+                                </>
+                            )}
+                        </Box>
+                        
+                    </Box>
                     <Button  fullWidth color='primary' 
                         variant='contained' 
                         style={{marginBottom:10}}
