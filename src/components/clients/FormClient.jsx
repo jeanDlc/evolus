@@ -11,6 +11,7 @@ import {useParams} from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import useForm from '../../lib/hooks/useForm';
 import { validateClient } from '../../lib/validation/forms/client';
+import Layout from '../Layout/Layout';
 const FormNewClient = () => {
     const params=useParams();
     const redirectTo=useRedirecTo();
@@ -64,7 +65,8 @@ const FormNewClient = () => {
         }
         return ()=>isMounted=false;
     },[params.id]);
-    return ( 
+    return (
+        <Layout>
         <Container maxWidth='md' style={{marginTop:40}} >
             <Card>
                 <CardContent component='form' onSubmit={handleSubmit} >
@@ -202,6 +204,7 @@ const FormNewClient = () => {
                 </CardContent>
             </Card>
         </Container>
+        </Layout> 
      );
 }
  

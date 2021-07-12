@@ -18,6 +18,7 @@ import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import ConfirmDeleteClient from './ConfirmDeleteCliente';
 import useOneClient from '../../lib/hooks/useOneClient';
 import { toast } from 'react-toastify';
+import Layout from '../Layout/Layout';
 const ProjectPage = () => {
     const redirectTo=useRedirecTo();
     const [open, setOpen]=useState(false);
@@ -32,6 +33,7 @@ const ProjectPage = () => {
     },[error]);
     
     return ( 
+        <Layout>
         <Container component='main' maxWidth='sm' style={{width:'100%'}} >
             <Card style={{marginTop:30, width:'100%'}} >
                 <CardContent>
@@ -122,6 +124,7 @@ const ProjectPage = () => {
                 <ConfirmDeleteClient setOpen={setOpen} idClient={client.id} />
             </Dialog>
         </Container>
+        </Layout>
      );
 }
  

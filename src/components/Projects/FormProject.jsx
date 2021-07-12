@@ -13,7 +13,7 @@ import { newProject,getProjectById,updateProject } from '../../lib/services/proj
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
-
+import Layout from '../Layout/Layout';
 const FormProject = () => {
     const params=useParams();
     const redirectTo=useRedirecTo();
@@ -113,6 +113,7 @@ const FormProject = () => {
         }
     }
     return ( 
+        <Layout>
         <Container maxWidth='md' style={{marginTop:50}} >
             <Card component='main'  style={{marginBottom:28}} >
                 <CardContent component='form' onSubmit={handleSubmit} >
@@ -248,6 +249,7 @@ const FormProject = () => {
             </Card>
             
         </Container>
+        </Layout>
      );
 }
  

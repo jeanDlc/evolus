@@ -19,13 +19,15 @@ import useOneEmployee from '../../lib/hooks/useOneEmployee';
 import useRedirecTo from '../../lib/hooks/useRedirecTo';
 import { Dialog } from '@material-ui/core';
 import ConfirmDeleteEmployee from './ConfirmDeleteEmployee';
+import Layout from '../Layout/Layout';
 const EmployeePage = () => {
     const [open, setOpen]=useState(false);
     const redirectTo=useRedirecTo();
     const params=useParams();
     const employee=useOneEmployee(params.id);
     if(!employee) return 'Loading'
-    return ( 
+    return (
+        <Layout>
         <Container component='main' maxWidth='sm' style={{width:'100%'}} >
             <Card style={{marginTop:30, width:'100%'}} >
                 <CardContent>
@@ -133,6 +135,7 @@ const EmployeePage = () => {
                 <ConfirmDeleteEmployee idEmployee={employee.id} setOpen={setOpen} />
             </Dialog>
         </Container>
+        </Layout> 
      );
 }
  

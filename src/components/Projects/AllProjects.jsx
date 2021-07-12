@@ -3,17 +3,19 @@ import React from 'react';
 import CardProjectList from './CardProjectList';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import useProjects from '../../lib/hooks/useProjects';
+import Layout from '../Layout/Layout';
 const AllProjects = () => {
     const projects=useProjects();
     
     return ( 
-        <>
+        <Layout>
+
             <Container component='main' >
                 <Typography style={{marginTop:30, marginBottom:30}} component='h1' variant='h3' align='center' >
                     <FormatListBulletedIcon fontSize='large' /> Lista de Proyectos</Typography>
                 <CardProjectList projectsArray={projects} />
             </Container>
-        </>
+        </Layout>
      );
 }
  

@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { getTaskById,updateTask } from '../../lib/services/task';
 import EditIcon from '@material-ui/icons/Edit';
 import { useLocation } from 'react-router-dom';
+import Layout from '../Layout/Layout';
 function useQuery(){
     return new URLSearchParams(useLocation().search);
 }
@@ -74,6 +75,7 @@ const FormTask = ({ edit=false}) => {
     const {errors,handleChange,handleSubmit, fields:task={},setFields:setTask }=useForm(initialState,newTaskValidation, handleTaskReq);
     
     return ( 
+        <Layout>
         <Container maxWidth='sm' style={{marginTop:40}} >
             <Card>
                 <CardContent component='form' onSubmit={handleSubmit} >
@@ -143,6 +145,7 @@ const FormTask = ({ edit=false}) => {
                 </CardContent>
             </Card>
         </Container>
+        </Layout>
      );
 }
  

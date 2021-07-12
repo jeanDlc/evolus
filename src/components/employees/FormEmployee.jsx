@@ -14,6 +14,7 @@ import useRoles from '../../lib/hooks/useRoles';
 import EditIcon from '@material-ui/icons/Edit';
 import useForm from '../../lib/hooks/useForm';
 import { validateClient } from '../../lib/validation/forms/employee';
+import Layout from '../Layout/Layout';
 const FormEmployee = () => {
     const roles=useRoles();
     const redirectTo=useRedirecTo();
@@ -72,6 +73,7 @@ const FormEmployee = () => {
     },[params.id]);
 
     return ( 
+        <Layout>
         <Container maxWidth='md' style={{marginTop:50}}>
             <Card>
                 <CardContent component='form' onSubmit={handleSubmit} >
@@ -278,6 +280,7 @@ const FormEmployee = () => {
                 </CardContent>
             </Card>
         </Container>
+        </Layout>
      );
 }
  

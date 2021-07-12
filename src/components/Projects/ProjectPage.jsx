@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 import UseOneProject from '../../lib/hooks/useOneProject';
 import {format} from 'date-fns';
 import ConfirmDeleteProject from './ConfirmDeleteProject';
+import Layout from '../Layout/Layout';
 const ProjectPage = () => {
     const [openDeleteDialog,setOpenDeleteDialog]=useState(false);
     const redirectTo =useRedirecTo();
@@ -37,6 +38,7 @@ const ProjectPage = () => {
 
     if(!project) return 'Loading...'
     return ( 
+        <Layout>
         <Container component='main' style={{width:'100%'}} >
             <Card style={{marginTop:30, width:'100%'}} >
                 <CardContent>
@@ -173,6 +175,7 @@ const ProjectPage = () => {
                 />
             </Dialog>
         </Container>
+        </Layout>
      );
 }
  

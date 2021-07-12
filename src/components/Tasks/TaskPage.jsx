@@ -9,6 +9,7 @@ import ConfirmDeleteTask from './ConfirmDeleteTask';
 import WarningIcon from '@material-ui/icons/Warning';
 import DoneIcon from '@material-ui/icons/Done';
 import { toast } from 'react-toastify';
+import Layout from '../Layout/Layout';
 const useStyles = makeStyles((theme) => ({
     bold:{
         fontWeight:'bold'
@@ -33,6 +34,7 @@ const TaskPage = () => {
     },[error]);
 
     return ( 
+        <Layout>
         <Container maxWidth='sm' component='main' >
             <Card style={{marginTop:30}} >
                 <CardContent>
@@ -82,6 +84,7 @@ const TaskPage = () => {
                 </CardContent>
             </Card>
         </Container>
+        </Layout>
      ); 
 }
  

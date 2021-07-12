@@ -1,14 +1,14 @@
 import { Button, Card, CardContent, Container, FormControl, Input, InputAdornment, InputLabel, Typography } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import PersonIcon from '@material-ui/icons/Person';
-import React from 'react';
+
 const Login = () => {
     const login=e=>{
         e.preventDefault();
         console.log('login');
     }
     return ( 
-        <Container  maxWidth='sm' component='main' style={{marginTop:80}}  >
+            <Container  maxWidth='sm' component='main' style={{marginTop:80}}  >
             <Card>
                 <CardContent component='form' onSubmit={login} >
                     <Typography style={{fontWeight:'bold'}} align='center' component='h1' variant='h4' gutterBottom >Inicia sesión</Typography>

@@ -1,6 +1,5 @@
 
 import { useTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
-import Layout from './components/Layout/Layout';
 import {BrowserRouter,Switch,Route} from "react-router-dom";
 import Home from './components/Home';
 import Login from './components/Login';
@@ -27,64 +26,62 @@ function App() {
     <ThemeProvider theme={theme} >
       <AuthState>
         <BrowserRouter>
-          <Layout>
-              <Switch>
-                  <Route exact path='/' >
-                    <Home/>
-                  </Route>
-                  <Route exact path='/iniciar-sesion' >
-                    <Login/>
-                  </Route>
-                  <Route exact path='/nuevo-proyecto' >
-                    <FormProject/>
-                  </Route>
-                  <Route exact path='/editar-proyecto/:id' >
-                    <FormProject/>
-                  </Route>
-                  <Route exact path='/proyectos' >
-                    <AllProjects/>
-                  </Route>
-                  <Route exact path='/proyecto/:id' >
-                    <ProjectPage/>
-                  </Route>
-                  <Route path='/tarea/:id' >
-                    <TaskPage/>
-                  </Route>
-                  <Route path='/nueva-tarea' >
-                    <FormTask/>
-                  </Route>
-                  <Route path='/editar-tarea/:id' >
-                    <FormTask edit={true} />
-                  </Route>
-                  <Route path='/clientes' >
-                    <AllClients/>
-                  </Route>
-                  <Route path='/cliente/:id' >
-                    <ClientPage/>
-                  </Route>
-                  <Route path='/nuevo-cliente' >
-                    <FormClient/>
-                  </Route>
-                  <Route path='/actualizar-cliente/:id' >
-                    <FormClient/>
-                  </Route>
-                  <Route path='/empleados' >
-                    <AllEmployees/>
-                  </Route>
-                  <Route path='/empleado/:id' >
-                    <EmployeePage/>
-                  </Route>
-                  <Route path='/nuevo-empleado' >
-                    <FormEmployee/>
-                  </Route>
-                  <Route path='/actualizar-empleado/:id' >
-                    <FormEmployee/>
-                  </Route>
-                  <Route path='*' >
-                    <Page404/>
-                  </Route>
+          <Switch>
+                <Route exact path='/' >
+                  <Home/> 
+                </Route>
+                <Route exact path='/iniciar-sesion' >
+                  <Login/>
+                </Route>
+                <Route exact path='/nuevo-proyecto' >
+                  <FormProject/>
+                </Route>
+                <Route exact path='/editar-proyecto/:id' >
+                  <FormProject/>
+                </Route>
+                <Route exact path='/proyectos' >
+                  <AllProjects/>
+                </Route>
+                <Route exact path='/proyecto/:id' >
+                  <ProjectPage/>
+                </Route>
+                <Route path='/tarea/:id' >
+                  <TaskPage/>
+                </Route>
+                <Route path='/nueva-tarea' >
+                  <FormTask/>
+                </Route>
+                <Route path='/editar-tarea/:id' >
+                  <FormTask edit={true} />
+                </Route>
+                <Route path='/clientes' >
+                  <AllClients/>
+                </Route>
+                <Route path='/cliente/:id' >
+                  <ClientPage/>
+                </Route>
+                <Route path='/nuevo-cliente' >
+                  <FormClient/>
+                </Route>
+                <Route path='/actualizar-cliente/:id' >
+                  <FormClient/>
+                </Route>
+                <Route path='/empleados' >
+                  <AllEmployees/>
+                </Route>
+                <Route path='/empleado/:id' >
+                  <EmployeePage/>
+                </Route>
+                <Route path='/nuevo-empleado' >
+                  <FormEmployee/>
+                </Route>
+                <Route path='/actualizar-empleado/:id' >
+                  <FormEmployee/>
+                </Route>
+                <Route path='*' >
+                  <Page404/>
+                </Route>
               </Switch>
-          </Layout>
           <ToastContainer/>
         </BrowserRouter>
       </AuthState>
