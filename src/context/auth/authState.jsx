@@ -1,6 +1,6 @@
 import authContext from "./authContext";
 import { useReducer } from "react";
-import { LOGIN, LOGIN_ERROR } from "./types";
+import { LOGIN, LOGIN_ERROR, AUTH_USER, AUTH_ERROR } from "./types";
 import authReducer from "./authReducer";
 import axiosClient from "../../config/axios";
 import tokenAuth from "../../config/tokenAuth";
@@ -30,13 +30,23 @@ const AuthState = ({ children }) => {
   };
   //obtiene el usuario autenticado
   const getAuthUser = async () => {
-    //poner el token en headers
-    tokenAuth();
     try {
+      //poner el token en headers
+      tokenAuth();
+      //obtener el usuario autenticado
       const res = await axiosClient.get("/auth");
-      console.log(res);
+      const user = res.data;
+      //colocar info de usuario en el state global
+      dispatch({
+        type: AUTH_USER,
+        payload: { user },
+      });
     } catch (error) {
-      console.log(error.response);
+      const msg = error.response?.data?.error || "Error";
+      dispatch({
+        type: AUTH_ERROR,
+        payload: { msg },
+      });
     }
   };
   return (
@@ -46,6 +56,7 @@ const AuthState = ({ children }) => {
         authenticated: state.authenticated,
         token: state.token,
         logIn,
+        getAuthUser,
       }}
     >
       {children}

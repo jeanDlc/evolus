@@ -1,4 +1,4 @@
-import { LOGIN, LOGIN_ERROR } from "./types";
+import { LOGIN, LOGIN_ERROR, AUTH_USER, AUTH_ERROR } from "./types";
 import { toast } from "react-toastify";
 export default (state, action) => {
   switch (action.type) {
@@ -10,6 +10,7 @@ export default (state, action) => {
         authenticated: true,
       };
     case LOGIN_ERROR:
+    case AUTH_ERROR:
       toast.error(action.payload.msg);
       localStorage.removeItem("user-token");
       return {
@@ -17,6 +18,12 @@ export default (state, action) => {
         token: null,
         user: null,
         authenticated: false,
+      };
+    case AUTH_USER:
+      return {
+        ...state,
+        user: action.payload.user,
+        authenticated: true,
       };
     default:
       return state;
