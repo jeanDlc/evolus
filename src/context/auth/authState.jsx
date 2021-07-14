@@ -1,6 +1,6 @@
 import authContext from "./authContext";
 import { useReducer } from "react";
-import { LOGIN, LOGIN_ERROR, AUTH_USER, AUTH_ERROR } from "./types";
+import { LOGIN, LOGIN_ERROR, AUTH_USER, AUTH_ERROR, LOGOUT } from "./types";
 import authReducer from "./authReducer";
 import axiosClient from "../../config/axios";
 import tokenAuth from "../../config/tokenAuth";
@@ -28,6 +28,11 @@ const AuthState = ({ children }) => {
         payload: { msg: errorMsg },
       });
     }
+  };
+  const logOut = () => {
+    dispatch({
+      type: LOGOUT,
+    });
   };
   //obtiene el usuario autenticado
   const getAuthUser = async () => {
@@ -58,6 +63,7 @@ const AuthState = ({ children }) => {
         token: state.token,
         loading: state.loading,
         logIn,
+        logOut,
         getAuthUser,
       }}
     >

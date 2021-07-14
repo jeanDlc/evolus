@@ -15,14 +15,21 @@ import PersonIcon from "@material-ui/icons/Person";
 import useAuthState from "../lib/hooks/useAuthState";
 import useForm from "../lib/hooks/useForm";
 import validateLogInForm from "../lib/validation/forms/logIn";
+import { useEffect } from "react";
+import { useHistory } from "react-router";
 const Login = () => {
+  const history = useHistory();
   //función que inicia sesión del usuario
-  const { logIn } = useAuthState();
+  const { logIn, authenticated } = useAuthState();
   //campos del formulario
   const INITIAL_STATE = {
     email: "",
     pass: "",
   };
+  useEffect(() => {
+    //si el ususario está autenticado, redirigir a Home
+    if (authenticated) history.push("/");
+  }, [authenticated]);
   //encarga de la validación y el llamado a logIn
   const { handleSubmit, handleChange, errors, fields } = useForm(
     INITIAL_STATE,
