@@ -8,6 +8,7 @@ const AuthState = ({ children }) => {
   const initial_state = {
     user: null,
     authenticated: false,
+    loading: true,
     token:
       typeof window !== "undefined" ? localStorage.getItem("user-token") : null,
   };
@@ -55,6 +56,7 @@ const AuthState = ({ children }) => {
         user: state.user,
         authenticated: state.authenticated,
         token: state.token,
+        loading: state.loading,
         logIn,
         getAuthUser,
       }}

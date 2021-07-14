@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Sidebar from "./Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -35,14 +35,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
-  const { getAuthUser, user } = useAuthState();
+  const { user } = useAuthState();
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const bigScreen = useMediaQuery(theme.breakpoints.up("md"));
   const classes = useStyles();
-  useEffect(() => {
-    if (!user) getAuthUser();
-  }, []);
+
   function closeMenu() {
     setOpen(false);
   }

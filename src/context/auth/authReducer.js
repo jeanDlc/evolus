@@ -8,6 +8,7 @@ export default (state, action) => {
         ...state,
         token: action.payload,
         authenticated: true,
+        loading: false,
       };
     case LOGIN_ERROR:
     case AUTH_ERROR:
@@ -18,12 +19,14 @@ export default (state, action) => {
         token: null,
         user: null,
         authenticated: false,
+        loading: false,
       };
     case AUTH_USER:
       return {
         ...state,
         user: action.payload.user,
         authenticated: true,
+        loading: false,
       };
     default:
       return state;
