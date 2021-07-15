@@ -27,7 +27,7 @@ import { newEmployee, updateEmployee } from "../../lib/services/employees";
 import useRoles from "../../lib/hooks/useRoles";
 import EditIcon from "@material-ui/icons/Edit";
 import useForm from "../../lib/hooks/useForm";
-import { validateClient } from "../../lib/validation/forms/employee";
+import { validateEmployee } from "../../lib/validation/forms/employee";
 import Layout from "../Layout/Layout";
 const FormEmployee = () => {
   const roles = useRoles();
@@ -72,7 +72,7 @@ const FormEmployee = () => {
     setFields: setEmployee,
     handleSubmit,
     handleChange,
-  } = useForm(initialState, validateClient, handleEmployee);
+  } = useForm(initialState, validateEmployee, handleEmployee);
   useEffect(() => {
     let isMounted = true;
     if (params.id) {

@@ -22,6 +22,7 @@ import { ToastContainer } from "react-toastify";
 import FormTask from "./components/Tasks/FormTask";
 import AuthState from "./context/auth/authState";
 import PrivateRoute from "./components/routes/PrivateRoute";
+import ChangePass from "./components/employees/ChangePass";
 function App() {
   let theme = useTheme();
   theme = responsiveFontSizes(theme);
@@ -60,7 +61,11 @@ function App() {
               component={FormClient}
             />
             <PrivateRoute path="/empleados" component={AllEmployees} />
-            <PrivateRoute path="/empleado/:id" component={EmployeePage} />
+            <PrivateRoute exact path="/empleado/:id" component={EmployeePage} />
+            <PrivateRoute
+              path="/empleado/:id/cambiar-contraseña"
+              component={ChangePass}
+            />
             <PrivateRoute path="/nuevo-empleado" component={FormEmployee} />
             <PrivateRoute
               path="/actualizar-empleado/:id"

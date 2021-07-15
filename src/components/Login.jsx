@@ -90,7 +90,7 @@ const Login = () => {
               value={fields.pass}
               id="pass"
               name="pass"
-              type="pass"
+              type="password"
               aria-describedby="helper-pass"
               onChange={handleChange}
             />
