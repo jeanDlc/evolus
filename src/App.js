@@ -23,6 +23,7 @@ import FormTask from "./components/Tasks/FormTask";
 import AuthState from "./context/auth/authState";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import ChangePass from "./components/employees/ChangePass";
+import permissions from "./lib/permissions";
 function App() {
   let theme = useTheme();
   theme = responsiveFontSizes(theme);
@@ -35,38 +36,84 @@ function App() {
             <PrivateRoute exact path="/" component={Home} />
             <Route path="/iniciar-sesion" component={Login} />
             <PrivateRoute
+              justRoles={permissions.project.rolesToPost}
               exact
               path="/nuevo-proyecto"
               component={FormProject}
             />
             <PrivateRoute
+              justRoles={permissions.project.rolesToUpdate}
               exact
               path="/editar-proyecto/:id"
               component={FormProject}
             />
-            <PrivateRoute exact path="/proyectos" component={AllProjects} />
-            <PrivateRoute exact path="/proyecto/:id" component={ProjectPage} />
-            <PrivateRoute path="/tarea/:id" component={TaskPage} />
+            <PrivateRoute
+              justRoles={permissions.project.rolesToGetAll}
+              exact
+              path="/proyectos"
+              component={AllProjects}
+            />
+            <PrivateRoute
+              justRoles={permissions.project.rolesToGetOne}
+              exact
+              path="/proyecto/:id"
+              component={ProjectPage}
+            />
+            <PrivateRoute
+              justRoles={permissions.task.rolesToGetOne}
+              path="/tarea/:id"
+              component={TaskPage}
+            />
 
-            <PrivateRoute path="/nueva-tarea" component={FormTask} />
+            <PrivateRoute
+              justRoles={permissions.task.rolesToPost}
+              path="/nueva-tarea"
+              component={FormTask}
+            />
 
             <Route path="/editar-tarea/:id">
               <FormTask edit={true} />
             </Route>
-            <PrivateRoute path="/clientes" component={AllClients} />
-            <PrivateRoute path="/cliente/:id" component={ClientPage} />
-            <PrivateRoute path="/nuevo-cliente" component={FormClient} />
             <PrivateRoute
+              justRoles={permissions.client.rolesToGetAll}
+              path="/clientes"
+              component={AllClients}
+            />
+            <PrivateRoute
+              justRoles={permissions.client.rolesToGetOne}
+              path="/cliente/:id"
+              component={ClientPage}
+            />
+            <PrivateRoute
+              justRoles={permissions.client.rolesToPost}
+              path="/nuevo-cliente"
+              component={FormClient}
+            />
+            <PrivateRoute
+              justRoles={permissions.client.rolesToUpdate}
               path="/actualizar-cliente/:id"
               component={FormClient}
             />
-            <PrivateRoute path="/empleados" component={AllEmployees} />
-            <PrivateRoute exact path="/empleado/:id" component={EmployeePage} />
+            <PrivateRoute
+              justRoles={permissions.employee.rolesToGetAll}
+              path="/empleados"
+              component={AllEmployees}
+            />
+            <PrivateRoute
+              justRoles={permissions.employee.rolesToGetOne}
+              exact
+              path="/empleado/:id"
+              component={EmployeePage}
+            />
             <PrivateRoute
               path="/empleado/:id/cambiar-contraseña"
               component={ChangePass}
             />
-            <PrivateRoute path="/nuevo-empleado" component={FormEmployee} />
+            <PrivateRoute
+              justRoles={permissions.employee.rolesToPost}
+              path="/nuevo-empleado"
+              component={FormEmployee}
+            />
             <PrivateRoute
               path="/actualizar-empleado/:id"
               component={FormEmployee}

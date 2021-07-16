@@ -11,6 +11,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import useAuthState from "../../lib/hooks/useAuthState";
 import Menu from "./menu/Menu";
 import CustomMenuItem from "./menu/CustomMenuItem";
+import permissions from "../../lib/permissions";
+import { unionArrays } from "../../lib/functions/functions";
 const useStyles = makeStyles((theme) => ({
   sidebar: {
     width: "100%",
@@ -34,31 +36,57 @@ const Sidebar = () => {
       }
       className={classes.sidebar}
     >
-      {/**Lista de prouectos *************************************************/}
+      {/**Lista de proyectos *************************************************/}
       <Menu title="Proyectos" icon={WorkIcon}>
         <CustomMenuItem title="Todos" url="/proyectos" icon={ListIcon} />
         <CustomMenuItem
-          justRols={[1, 2]}
+          justRols={permissions.project.rolesToPost}
           title="Agregar nuevo"
           url="/nuevo-proyecto"
           icon={AddCircleIcon}
         />
       </Menu>
+
       {/**Menu de empleados *************************************************/}
-      <Menu title="Empleados" icon={AccountBoxIcon} justRols={[1, 2, 3]}>
-        <CustomMenuItem title="Todos" url="/empleados" icon={ListIcon} />
+      <Menu
+        title="Empleados"
+        icon={AccountBoxIcon}
+        justRols={unionArrays(
+          permissions.employee.rolesToGetAll,
+          permissions.employee.rolesToPost
+        )}
+      >
         <CustomMenuItem
-          justRols={[1]}
+          justRols={permissions.employee.rolesToGetAll}
+          title="Todos"
+          url="/empleados"
+          icon={ListIcon}
+        />
+        <CustomMenuItem
+          justRols={permissions.employee.rolesToPost}
           title="Agregar nuevo"
           url="/nuevo-empleado"
           icon={AddCircleIcon}
         />
       </Menu>
+
       {/**Menu de clientes *************************************************/}
-      <Menu title="Clientes" icon={GradeIcon} justRols={[1, 2, 3]}>
-        <CustomMenuItem title="Todos" url="/clientes" icon={ListIcon} />
+      <Menu
+        title="Clientes"
+        icon={GradeIcon}
+        justRols={unionArrays(
+          permissions.client.rolesToGetAll,
+          permissions.client.rolesToPost
+        )}
+      >
         <CustomMenuItem
-          justRols={[1, 2]}
+          justRols={permissions.client.rolesToGetAll}
+          title="Todos"
+          url="/clientes"
+          icon={ListIcon}
+        />
+        <CustomMenuItem
+          justRols={permissions.client.rolesToPost}
           title="Agregar nuevo"
           url="/nuevo-cliente"
           icon={AddCircleIcon}

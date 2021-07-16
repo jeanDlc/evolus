@@ -1,0 +1,32 @@
+//roles permitidos para requests
+const permissions = {
+  client: {
+    rolesToGetAll: [1, 2, 3],
+    rolesToGetOne: [1, 2, 3],
+    rolesToPost: [1, 2],
+    rolesToDelete: [1, 2],
+    rolesToUpdate: [1, 2],
+  },
+  employee: {
+    rolesToGetAll: [1, 2, 3],
+    rolesToGetOne: [1, 2, 3, 4],
+    rolesToPost: [1],
+    rolesToDelete: [1],
+    rolesToUpdate: [1],
+  },
+  project: {
+    rolesToGetAll: [1, 2, 3, 4],
+    rolesToGetOne: [1, 2, 3, 4],
+    rolesToPost: [1, 2],
+    rolesToDelete: [1, 2],
+    rolesToUpdate: [1, 2],
+  },
+  task: {
+    rolesToGetAll: [1, 2, 3, 4],
+    rolesToGetOne: [1, 2, 3, 4],
+    rolesToPost: [1, 2, 3],
+    rolesToDelete: [1, 2],
+    rolesToUpdate: [1, 2],
+  },
+};
+export default permissions;
