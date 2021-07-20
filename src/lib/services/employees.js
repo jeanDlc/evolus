@@ -21,6 +21,11 @@ export const updateEmployee = async (id, employee) => {
   const res = await axiosClient.put(`/empleados/${id}`, employee);
   return res.data;
 };
+export const changePassword = async (id, data) => {
+  tokenAuth();
+  const res = await axiosClient.put(`/empleados/${id}/cambiar-password`, data);
+  return res.data;
+};
 export const deleteEmployee = async (id) => {
   tokenAuth();
   const res = await axiosClient.delete(`/empleados/${id}`);

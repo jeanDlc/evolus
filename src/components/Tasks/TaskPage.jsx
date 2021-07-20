@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const TaskPage = () => {
   const { myPermissions } = usePermissions();
+
   const { push } = useHistory();
   const [openDelete, setOpenDelete] = useState(false);
   const [done, setDone] = useState(false);
@@ -111,17 +112,19 @@ const TaskPage = () => {
                 {loading ? (
                   <CircularProgress color="secondary" />
                 ) : (
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={done}
-                        onChange={handleTaskEstado}
-                        name="estado"
-                        color="secondary"
-                      />
-                    }
-                    label={done ? "Terminado" : "No terminado"}
-                  />
+                  myPermissions.ToUpdateStateTask && (
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={done}
+                          onChange={handleTaskEstado}
+                          name="estado"
+                          color="secondary"
+                        />
+                      }
+                      label={done ? "Terminado" : "No terminado"}
+                    />
+                  )
                 )}
               </Grid>
             </Grid>

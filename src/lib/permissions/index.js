@@ -25,9 +25,10 @@ const permissions = {
   task: {
     rolesToGetAll: [1, 2, 3, 4],
     rolesToGetOne: [1, 2, 3, 4],
-    rolesToPost: [1, 2, 3],
-    rolesToDelete: [1, 2],
-    rolesToUpdate: [1, 2],
+    rolesToPost: [1, 3],
+    rolesToDelete: [1],
+    rolesToUpdate: [1],
+    rolesToUpdateState: [1, 3, 4],
   },
 };
 export default permissions;

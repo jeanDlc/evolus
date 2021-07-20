@@ -239,16 +239,18 @@ const ProjectPage = () => {
           <Typography component="h3" variant="h4" gutterBottom>
             <FormatListBulletedIcon /> Tareas
           </Typography>
-          <Button
-            style={{ marginBottom: 15 }}
-            startIcon={<AddCircleIcon />}
-            component={Link}
-            to={`/nueva-tarea?idProject=${project.id}`}
-            variant="contained"
-            color="primary"
-          >
-            Nueva tarea
-          </Button>
+          {myPermissions.ToPostTask && (
+            <Button
+              style={{ marginBottom: 15 }}
+              startIcon={<AddCircleIcon />}
+              component={Link}
+              to={`/nueva-tarea?idProject=${project.id}`}
+              variant="contained"
+              color="primary"
+            >
+              Nueva tarea
+            </Button>
+          )}
 
           {tasks.length > 0 ? (
             <CardTaskList tasksArray={tasks} />

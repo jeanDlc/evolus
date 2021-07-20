@@ -19,7 +19,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import LockIcon from "@material-ui/icons/Lock";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { useParams } from "react-router-dom";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { getEmployeeById } from "../../lib/services/employees";
 import { toast } from "react-toastify";
 import useRedirecTo from "../../lib/hooks/useRedirecTo";
@@ -309,60 +309,66 @@ const FormEmployee = () => {
                   )}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <FormControl
-                  color="secondary"
-                  error={errors.pass ? true : false}
-                  margin="normal"
-                  fullWidth={true}
-                >
-                  <InputLabel htmlFor="pass">Contraseña</InputLabel>
-                  <Input
-                    startAdornment={
-                      <InputAdornment>
-                        <LockIcon />
-                      </InputAdornment>
-                    }
-                    id="pass"
-                    name="pass"
-                    type="password"
-                    aria-describedby="helper-pass"
-                    onChange={handleChange}
-                    value={employee.pass}
-                  />
-                  {errors.pass && (
-                    <FormHelperText>{errors.pass} </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <FormControl
-                  color="secondary"
-                  error={employee.pass !== employee.confirmar ? true : false}
-                  margin="normal"
-                  fullWidth={true}
-                >
-                  <InputLabel htmlFor="confirmar">
-                    Confirma la contraseña
-                  </InputLabel>
-                  <Input
-                    startAdornment={
-                      <InputAdornment>
-                        <LockIcon />
-                      </InputAdornment>
-                    }
-                    id="confirmar"
-                    name="confirmar"
-                    type="password"
-                    aria-describedby="helper-confirmar"
-                    onChange={handleChange}
-                    value={employee.confirmar}
-                  />
-                  {errors.confirmar && (
-                    <FormHelperText>{errors.confirmar} </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
+              {!params.id && (
+                <>
+                  <Grid item xs={12} md={6}>
+                    <FormControl
+                      color="secondary"
+                      error={errors.pass ? true : false}
+                      margin="normal"
+                      fullWidth={true}
+                    >
+                      <InputLabel htmlFor="pass">Contraseña</InputLabel>
+                      <Input
+                        startAdornment={
+                          <InputAdornment>
+                            <LockIcon />
+                          </InputAdornment>
+                        }
+                        id="pass"
+                        name="pass"
+                        type="password"
+                        aria-describedby="helper-pass"
+                        onChange={handleChange}
+                        value={employee.pass}
+                      />
+                      {errors.pass && (
+                        <FormHelperText>{errors.pass} </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl
+                      color="secondary"
+                      error={
+                        employee.pass !== employee.confirmar ? true : false
+                      }
+                      margin="normal"
+                      fullWidth={true}
+                    >
+                      <InputLabel htmlFor="confirmar">
+                        Confirma la contraseña
+                      </InputLabel>
+                      <Input
+                        startAdornment={
+                          <InputAdornment>
+                            <LockIcon />
+                          </InputAdornment>
+                        }
+                        id="confirmar"
+                        name="confirmar"
+                        type="password"
+                        aria-describedby="helper-confirmar"
+                        onChange={handleChange}
+                        value={employee.confirmar}
+                      />
+                      {errors.confirmar && (
+                        <FormHelperText>{errors.confirmar} </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                </>
+              )}
               <Grid item xs={12} md={6}>
                 <Button
                   startIcon={params.id ? <EditIcon /> : <AddCircleIcon />}
