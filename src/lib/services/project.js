@@ -31,7 +31,14 @@ export const deleteProject = async (idProject) => {
   const res = await axiosClient.delete(`/proyectos/${idProject}`);
   return res.data;
 };
-
+export const postProjectEmployees = async (idProject, idEmployeesList) => {
+  tokenAuth();
+  const res = await axiosClient.post(
+    `/proyectos/${idProject}/empleados`,
+    idEmployeesList
+  );
+  return res.data;
+};
 export const newProjectTask = async (idProject, task) => {
   tokenAuth();
   const res = await axiosClient.post(`/proyectos/${idProject}/tareas`, task);

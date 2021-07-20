@@ -16,3 +16,8 @@ export const deleteTask = async (idTask) => {
   const res = await axiosClient.delete(`/tareas/${idTask}`);
   return res.data;
 };
+export const updateTaskState = async (idTask, state) => {
+  tokenAuth();
+  const res = await axiosClient.put(`/tareas/${idTask}/estado`, state);
+  return res.data;
+};

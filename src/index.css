@@ -1,11 +1,18 @@
 html {
   box-sizing: border-box;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
-a{
+a {
   color: white;
   text-decoration: none;
 }
-
+.bold {
+  font-weight: bold !important;
+}
+.capitalize {
+  text-transform: capitalize;
+}

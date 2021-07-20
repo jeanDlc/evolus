@@ -20,6 +20,7 @@ const permissions = {
     rolesToPost: [1, 2],
     rolesToDelete: [1, 2],
     rolesToUpdate: [1, 2],
+    rolesToAddEmployeesTo: [1, 3],
   },
   task: {
     rolesToGetAll: [1, 2, 3, 4],

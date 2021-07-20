@@ -30,7 +30,12 @@ import { Dialog } from "@material-ui/core";
 import ConfirmDeleteEmployee from "./ConfirmDeleteEmployee";
 import SecurityIcon from "@material-ui/icons/Security";
 import Layout from "../Layout/Layout";
+import usePermissions from "../../lib/hooks/usePermissions";
+import useAuthState from "../../lib/hooks/useAuthState";
 const EmployeePage = () => {
+  const { myPermissions } = usePermissions();
+  const { user } = useAuthState();
+  console.log(myPermissions, user);
   const [open, setOpen] = useState(false);
   const params = useParams();
   const employee = useOneEmployee(params.id);
@@ -135,9 +140,11 @@ const EmployeePage = () => {
           </CardContent>
           <CardActions>
             <Grid container spacing={2} style={{ marginBottom: 5 }}>
-              <Grid item md={6}>
-                <Link to={`/actualizar-empleado/${employee.id}`}>
+              {employee?.id === user?.id || myPermissions?.ToUpdateEmployee ? (
+                <Grid item xs={12} md={6}>
                   <Button
+                    component={Link}
+                    to={`/actualizar-empleado/${employee.id}`}
                     variant="contained"
                     color="primary"
                     fullWidth
@@ -145,30 +152,34 @@ const EmployeePage = () => {
                   >
                     Editar
                   </Button>
-                </Link>
-              </Grid>
-              <Grid item md={6}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  fullWidth
-                  startIcon={<DeleteIcon />}
-                  onClick={() => setOpen(true)}
-                >
-                  Eliminar
-                </Button>
-              </Grid>
-              <Grid item md={12}>
-                <Link to={`/empleado/${employee.id}/cambiar-contraseña`}>
+                </Grid>
+              ) : null}
+              {employee?.id === user?.id || myPermissions?.ToUpdateEmployee ? (
+                <Grid item xs={12} md={6}>
                   <Button
+                    component={Link}
+                    to={`/empleado/${employee.id}/cambiar-contraseña`}
                     variant="contained"
                     fullWidth
                     startIcon={<SecurityIcon />}
                   >
                     Cambiar password
                   </Button>
-                </Link>
-              </Grid>
+                </Grid>
+              ) : null}
+              {myPermissions.ToDeleteClient && (
+                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    fullWidth
+                    startIcon={<DeleteIcon />}
+                    onClick={() => setOpen(true)}
+                  >
+                    Eliminar
+                  </Button>
+                </Grid>
+              )}
             </Grid>
           </CardActions>
         </Card>

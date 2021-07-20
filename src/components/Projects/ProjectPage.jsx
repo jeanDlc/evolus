@@ -10,7 +10,6 @@ import {
   Dialog,
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import CustomProgress from "../ui/CustomProgress";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -21,20 +20,23 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import PaymentIcon from "@material-ui/icons/Payment";
 import CardTaskList from "../Tasks/CardTaskList";
+import GroupIcon from "@material-ui/icons/Group";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import useRedirecTo from "../../lib/hooks/useRedirecTo";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import { toast } from "react-toastify";
 import UseOneProject from "../../lib/hooks/useOneProject";
 import { format } from "date-fns";
 import ConfirmDeleteProject from "./ConfirmDeleteProject";
+import { Link, useParams, useHistory } from "react-router-dom";
 import Layout from "../Layout/Layout";
+import usePermissions from "../../lib/hooks/usePermissions";
 const ProjectPage = () => {
+  const { myPermissions } = usePermissions();
+  const { push } = useHistory();
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const redirectTo = useRedirecTo();
   const params = useParams();
 
   const { client, tasks, project, error, errorMessage } = UseOneProject(
@@ -42,10 +44,12 @@ const ProjectPage = () => {
   );
   //progreso del proyecto
   const progress =
-    (tasks.filter((task) => task.estado).length * 100) / tasks.length || 0;
+    Math.floor(
+      (tasks.filter((task) => task.estado).length * 100) / tasks.length
+    ) || 0;
   useEffect(() => {
     if (error) {
-      redirectTo("/proyectos");
+      push("/proyectos");
       toast.error(errorMessage || "Error");
     }
   }, [error]);
@@ -139,21 +143,26 @@ const ProjectPage = () => {
                   Equipo
                 </Typography>
                 <List>
-                  {project.Empleados.map((employee) => (
-                    <ListItem
-                      button
-                      key={employee.id}
-                      onClick={() => redirectTo(`/empleado/${employee.id}`)}
-                    >
-                      <ListItemIcon>
-                        <PersonIcon />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={employee.Rol.nombre}
-                        secondary={`${employee.nombre} ${employee.apellidos} `}
-                      />
-                    </ListItem>
-                  ))}
+                  {project?.Empleados?.length >= 1 ? (
+                    project?.Empleados?.map((employee) => (
+                      <ListItem
+                        component={Link}
+                        to={`/empleado/${employee.id}`}
+                        button
+                        key={employee.id}
+                      >
+                        <ListItemIcon>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={employee.Rol.nombre}
+                          secondary={`${employee.nombre} ${employee.apellidos} `}
+                        />
+                      </ListItem>
+                    ))
+                  ) : (
+                    <ListItem>Aún no hay empleados</ListItem>
+                  )}
                 </List>
                 <List>
                   <Typography component="h3" variant="h6">
@@ -162,7 +171,8 @@ const ProjectPage = () => {
                   {client ? (
                     <ListItem
                       button
-                      onClick={() => redirectTo(`/cliente/${client.id}`)}
+                      component={Link}
+                      to={`/cliente/${client.id}`}
                     >
                       <ListItemIcon>
                         <PersonOutlineIcon />
@@ -185,27 +195,42 @@ const ProjectPage = () => {
                 >
                   Acciones
                 </Typography>
-                <Button
-                  color="primary"
-                  onClick={() => redirectTo(`/editar-proyecto/${params.id}`)}
-                  variant="contained"
-                  fullWidth
-                  startIcon={<EditIcon />}
-                  style={{ marginBottom: 18 }}
-                >
-                  {" "}
-                  Editar{" "}
-                </Button>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  onClick={() => setOpenDeleteDialog(true)}
-                  fullWidth
-                  startIcon={<DeleteIcon />}
-                >
-                  {" "}
-                  Eliminar{" "}
-                </Button>
+                {myPermissions.ToAddEmployeesToProject && (
+                  <Button
+                    component={Link}
+                    to={`/proyecto/${project.id}/empleados`}
+                    variant="contained"
+                    fullWidth
+                    style={{ marginBottom: 18 }}
+                    startIcon={<GroupIcon />}
+                  >
+                    Designar empleados
+                  </Button>
+                )}
+                {myPermissions.ToUpdateProject && (
+                  <Button
+                    component={Link}
+                    to={`/editar-proyecto/${params.id}`}
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                    startIcon={<EditIcon />}
+                    style={{ marginBottom: 18 }}
+                  >
+                    Editar
+                  </Button>
+                )}
+                {myPermissions.ToDeleteProject && (
+                  <Button
+                    color="secondary"
+                    variant="contained"
+                    onClick={() => setOpenDeleteDialog(true)}
+                    fullWidth
+                    startIcon={<DeleteIcon />}
+                  >
+                    Eliminar
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </CardContent>
@@ -217,11 +242,11 @@ const ProjectPage = () => {
           <Button
             style={{ marginBottom: 15 }}
             startIcon={<AddCircleIcon />}
+            component={Link}
+            to={`/nueva-tarea?idProject=${project.id}`}
             variant="contained"
             color="primary"
-            onClick={() => redirectTo(`/nueva-tarea?idProject=${project.id}`)}
           >
-            {" "}
             Nueva tarea
           </Button>
 

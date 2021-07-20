@@ -24,6 +24,7 @@ import AuthState from "./context/auth/authState";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import ChangePass from "./components/employees/ChangePass";
 import permissions from "./lib/permissions";
+import FormEmployeesForProject from "./components/Projects/FormEmployeesForProject";
 function App() {
   let theme = useTheme();
   theme = responsiveFontSizes(theme);
@@ -60,6 +61,12 @@ function App() {
               component={ProjectPage}
             />
             <PrivateRoute
+              justRoles={permissions.project.rolesToAddEmployeesTo}
+              exact
+              path="/proyecto/:id/empleados"
+              component={FormEmployeesForProject}
+            />
+            <PrivateRoute
               justRoles={permissions.task.rolesToGetOne}
               path="/tarea/:id"
               component={TaskPage}
@@ -70,7 +77,6 @@ function App() {
               path="/nueva-tarea"
               component={FormTask}
             />
-
             <Route path="/editar-tarea/:id">
               <FormTask edit={true} />
             </Route>
