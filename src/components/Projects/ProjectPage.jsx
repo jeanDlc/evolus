@@ -65,13 +65,17 @@ const ProjectPage = () => {
               variant="h3"
               align="center"
               gutterBottom
-              style={{ textTransform: "capitalize" }}
+              className="bold capitalize"
             >
-              Proyecto: {project.nombre}
+              {project.nombre}
+            </Typography>
+            <Typography align="center" className="mb-4">
+              Proyecto
             </Typography>
             <Divider />
             <Typography
               style={{ marginTop: 20 }}
+              className="bold"
               gutterBottom
               component="h3"
               variant="h6"
@@ -83,11 +87,7 @@ const ProjectPage = () => {
             </Typography>
 
             <Box component="section" marginY={2}>
-              <Typography
-                style={{ marginBottom: 15 }}
-                component="h3"
-                variant="h6"
-              >
+              <Typography className="bold mb-5" component="h3" variant="h6">
                 Progreso {progress} %
               </Typography>
               <CustomProgress progress={progress} />
@@ -108,7 +108,7 @@ const ProjectPage = () => {
             </Box>
             <Grid container component="section" spacing={3}>
               <Grid item xs={12} md={6} lg={4}>
-                <Typography component="h3" variant="h6">
+                <Typography component="h3" variant="h6" className="bold">
                   Detalles
                 </Typography>
                 <List>
@@ -139,7 +139,7 @@ const ProjectPage = () => {
                 </List>
               </Grid>
               <Grid item xs={12} md={6} lg={4}>
-                <Typography component="h3" variant="h6">
+                <Typography component="h3" variant="h6" className="bold">
                   Equipo
                 </Typography>
                 <List>
@@ -165,7 +165,7 @@ const ProjectPage = () => {
                   )}
                 </List>
                 <List>
-                  <Typography component="h3" variant="h6">
+                  <Typography component="h3" variant="h6" className="bold">
                     Cliente
                   </Typography>
                   {client ? (
@@ -188,11 +188,7 @@ const ProjectPage = () => {
                 </List>
               </Grid>
               <Grid item xs={12} md={6} lg={4}>
-                <Typography
-                  component="h3"
-                  variant="h6"
-                  style={{ marginBottom: 20 }}
-                >
+                <Typography component="h3" variant="h6" className="bold mb-4">
                   Acciones
                 </Typography>
                 {myPermissions.ToAddEmployeesToProject && (

@@ -51,12 +51,13 @@ const FormEmployee = () => {
       if (params.id) {
         //update
         res = await updateEmployee(params.id, employee);
+        redirectTo(`/empleado/${params.id}`);
       } else {
         //create new employee
         res = await newEmployee(employee);
+        redirectTo("/empleados");
       }
       toast.success(res.msg || "Éxito");
-      redirectTo("/empleados");
     } catch (error) {
       if (error.response?.data?.errores) {
         const arrayErrors = error.response.data.errores;

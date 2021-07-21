@@ -1,23 +1,16 @@
-import { Container, Typography } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import React from "react";
 import CardProjectList from "./CardProjectList";
 import useProjects from "../../lib/hooks/useProjects";
 import Layout from "../Layout/Layout";
+import Heading from "../ui/Heading";
 const AllProjects = () => {
   const projects = useProjects();
 
   return (
     <Layout>
       <Container component="main">
-        <Typography
-          style={{ marginTop: 30, marginBottom: 30 }}
-          component="h1"
-          variant="h3"
-          align="center"
-        >
-          {" "}
-          Lista de Proyectos
-        </Typography>
+        <Heading content="Proyectos" />
         <CardProjectList projectsArray={projects} />
       </Container>
     </Layout>

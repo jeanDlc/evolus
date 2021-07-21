@@ -35,7 +35,7 @@ import useAuthState from "../../lib/hooks/useAuthState";
 const EmployeePage = () => {
   const { myPermissions } = usePermissions();
   const { user } = useAuthState();
-  console.log(myPermissions, user);
+
   const [open, setOpen] = useState(false);
   const params = useParams();
   const employee = useOneEmployee(params.id);

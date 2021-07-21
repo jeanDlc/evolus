@@ -24,7 +24,6 @@ const ChangePass = () => {
   };
   const postNewPassword = () => {
     //consultar a la api para cambiar el password
-    console.log(fields);
     changePassword(employeeId, fields)
       .then((res) => {
         toast.success(res.msg || "Éxito");

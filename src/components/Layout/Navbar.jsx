@@ -12,6 +12,7 @@ import Drawer from "@material-ui/core/Drawer";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
 import useAuthState from "../../lib/hooks/useAuthState";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -71,7 +72,11 @@ const Navbar = () => {
           </Typography>
 
           <Link to={`/empleado/${user?.id}`}>
-            {`${user?.nombre} ${user?.apellidos}`}
+            {bigScreen ? (
+              `${user?.nombre} ${user?.apellidos}`
+            ) : (
+              <AccountCircleIcon />
+            )}
           </Link>
         </Toolbar>
       </AppBar>
