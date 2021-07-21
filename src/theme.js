@@ -1,11 +1,13 @@
 import { red, indigo, green, yellow, blue } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 
+const bgColor = "rgb(34, 43, 54)";
+const indigoGhost = "rgba(83,109,254,.05)";
 // A custom theme for this app
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "rgb(34, 43, 54)",
+      main: bgColor,
       contrastText: "rgb(145, 158, 171)",
     },
     secondary: {
@@ -32,12 +34,34 @@ const theme = createMuiTheme({
   overrides: {
     MuiCard: {
       root: {
-        backgroundColor: "rgb(34, 43, 54)",
+        backgroundColor: bgColor,
+      },
+    },
+    MuiCardActionArea: {
+      root: {
+        "&:hover": {
+          backgroundColor: indigoGhost,
+        },
       },
     },
     MuiMenu: {
       list: {
-        backgroundColor: "rgb(34, 43, 54)",
+        backgroundColor: bgColor,
+      },
+    },
+    MuiListItem: {
+      root: {},
+      button: {
+        borderRadius: 10,
+        "&:hover": {
+          backgroundColor: indigoGhost,
+        },
+        "&.Mui-selected": {
+          backgroundColor: indigoGhost,
+        },
+      },
+      selected: {
+        backgroundColor: indigoGhost,
       },
     },
     MuiButton: {
@@ -64,7 +88,7 @@ const theme = createMuiTheme({
     },
     MuiDialog: {
       paper: {
-        backgroundColor: "rgb(34, 43, 54)",
+        backgroundColor: bgColor,
       },
     },
   },

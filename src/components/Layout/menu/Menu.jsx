@@ -28,7 +28,7 @@ const Menu = ({ title, children, icon: Icon, justRols = [1, 2, 3, 4] }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open}>
-        <List>{children}</List>
+        <List style={{ paddingLeft: 10, paddingRight: 10 }}>{children}</List>
       </Collapse>
     </>
   );
