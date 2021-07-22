@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Servidor
+
+La aplicación funciona con un servidor privado:
+[http://localhost:4000](http://localhost:4000)
+Además deber crear una variable de entorno llamada REACT_APP_API
+
 ## Available Scripts
 
 In the project directory, you can run:
