@@ -59,7 +59,9 @@ const TaskPage = () => {
     }
   }, [error]);
   useEffect(() => {
-    setDone(task?.estado === true);
+    let isMounted = true;
+    isMounted && setDone(task?.estado === true);
+    return () => (isMounted = false);
   }, [task]);
   const handleTaskEstado = () => {
     const estado = !done;

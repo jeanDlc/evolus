@@ -17,7 +17,7 @@ const useProjects = () => {
       .then(() => isMounted && setLoading(false));
     return () => (isMounted = false);
   }, []);
-  return { projects, loading };
+  return { projects, loading, error };
 };
 
 export default useProjects;

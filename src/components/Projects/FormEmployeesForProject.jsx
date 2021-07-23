@@ -11,6 +11,7 @@ import {
   Button,
   FormHelperText,
   CircularProgress,
+  LinearProgress,
 } from "@material-ui/core";
 import Layout from "../Layout/Layout";
 import useEmployees from "../../lib/hooks/useEmployees";
@@ -21,15 +22,19 @@ import { postProjectEmployees } from "../../lib/services/project";
 import { toast } from "react-toastify";
 const FormEmployeesForProject = () => {
   const [selectedIdEmployees, setSelectedIdEmployees] = useState([]);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const { id: projectId } = useParams();
   const { push } = useHistory();
   const { employees, loading } = useEmployees();
   const { project } = UseOneProject(projectId);
   useEffect(() => {
+    let isMounted = true;
     //obtener los empleados para rellenar el checkbox
     if (project?.Empleados) {
-      setSelectedIdEmployees(project.Empleados.map((emp) => emp.id));
+      isMounted &&
+        setSelectedIdEmployees(project.Empleados.map((emp) => emp.id));
     }
+    return () => (isMounted = false);
   }, [project]);
   //manejar el state cuando cambia el checkbox
   const handleChange = (e) => {
@@ -53,6 +58,7 @@ const FormEmployeesForProject = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedIdEmployees.length === 0) return false;
+    setLoadingSubmit(true);
     postProjectEmployees(projectId, { empleados: selectedIdEmployees })
       .then((res) => {
         toast.success(res.msg || "Éxito");
@@ -60,7 +66,10 @@ const FormEmployeesForProject = () => {
       .catch((error) => {
         toast.error(error.response?.data?.error || "Ocurrió un error");
       })
-      .then(() => push(`/proyecto/${projectId}`));
+      .then(() => {
+        setLoadingSubmit(false);
+        push(`/proyecto/${projectId}`);
+      });
   };
   return (
     <Layout>
@@ -101,9 +110,16 @@ const FormEmployeesForProject = () => {
               </FormGroup>
               <FormHelperText>ELige al menos un empleado</FormHelperText>
             </FormControl>
-            <Button type="submit" variant="contained" color="primary" fullWidth>
+            <Button
+              disabled={loadingSubmit}
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
               Guardar cambios
             </Button>
+            {loadingSubmit && <LinearProgress className="mt-4" />}
           </CardContent>
         </Card>
       </Container>

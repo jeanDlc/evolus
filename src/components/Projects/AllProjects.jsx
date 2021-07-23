@@ -1,4 +1,4 @@
-import { Container, Typography, CircularProgress } from "@material-ui/core";
+import { Container, CircularProgress } from "@material-ui/core";
 import CardProjectList from "./CardProjectList";
 import useProjects from "../../lib/hooks/useProjects";
 import Layout from "../Layout/Layout";

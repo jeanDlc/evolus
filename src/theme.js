@@ -21,7 +21,7 @@ const theme = createMuiTheme({
       default: "rgb(23, 28, 36)",
     },
     success: {
-      main: green.A400,
+      main: green[700],
     },
     warning: {
       main: yellow[800],
@@ -50,7 +50,6 @@ const theme = createMuiTheme({
       },
     },
     MuiListItem: {
-      root: {},
       button: {
         borderRadius: 10,
         "&:hover": {
@@ -59,9 +58,6 @@ const theme = createMuiTheme({
         "&.Mui-selected": {
           backgroundColor: indigoGhost,
         },
-      },
-      selected: {
-        backgroundColor: indigoGhost,
       },
     },
     MuiButton: {

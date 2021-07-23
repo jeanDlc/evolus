@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getClientById } from "../services/client";
 const useOneClient = (idClient) => {
   const [client, setClient] = useState({});

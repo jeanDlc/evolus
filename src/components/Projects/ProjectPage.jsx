@@ -9,13 +9,12 @@ import {
   Typography,
   Dialog,
   CircularProgress,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  List,
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import CustomProgress from "../ui/CustomProgress";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import PersonIcon from "@material-ui/icons/Person";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
@@ -28,10 +27,13 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import { toast } from "react-toastify";
+import CustomProgress from "../ui/CustomProgress";
 import UseOneProject from "../../lib/hooks/useOneProject";
 import { format } from "date-fns";
 import ConfirmDeleteProject from "./ConfirmDeleteProject";
 import { Link, useParams, useHistory } from "react-router-dom";
+import TodayIcon from "@material-ui/icons/Today";
+import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
 import Layout from "../Layout/Layout";
 import usePermissions from "../../lib/hooks/usePermissions";
 const ProjectPage = () => {
@@ -79,40 +81,40 @@ const ProjectPage = () => {
                   Proyecto
                 </Typography>
                 <Divider />
-                <Typography
-                  style={{ marginTop: 20 }}
-                  className="bold"
-                  gutterBottom
-                  component="h3"
-                  variant="h6"
-                >
-                  Descripción
-                </Typography>
-                <Typography gutterBottom color="textSecondary">
-                  {project?.descripcion}
-                </Typography>
 
-                <Box component="section" marginY={2}>
-                  <Typography className="bold mb-5" component="h3" variant="h6">
-                    Progreso {progress} %
-                  </Typography>
-                  <CustomProgress progress={progress} />
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    marginTop={1}
-                    justifyContent="space-between"
-                  >
-                    <Typography color="textSecondary">
-                      {format(new Date(project?.fecha_inicio), "yyyy-MM-dd")}
+                <Grid
+                  className="mt-4"
+                  container
+                  component="section"
+                  spacing={3}
+                >
+                  <Grid component="section" item xs={12} md={8}>
+                    <Typography
+                      className="bold"
+                      gutterBottom
+                      component="h3"
+                      variant="h6"
+                    >
+                      Descripción
                     </Typography>
-                    <Typography color="textSecondary">
-                      {" "}
-                      {format(new Date(project?.fecha_fin), "yyyy-MM-dd")}
+                    <Typography gutterBottom color="textSecondary">
+                      {project?.descripcion}
                     </Typography>
-                  </Box>
-                </Box>
-                <Grid container component="section" spacing={3}>
+                  </Grid>
+                  <Grid component="section" item xs={12} md={4}>
+                    <Typography
+                      className="bold"
+                      gutterBottom
+                      component="h3"
+                      variant="h6"
+                    >
+                      Progreso {progress} %
+                    </Typography>
+                    <Typography className="mb-4" color="textSecondary">
+                      {progress < 100 && "No"} Terminado
+                    </Typography>
+                    <CustomProgress progress={progress} />
+                  </Grid>
                   <Grid item xs={12} md={6} lg={4}>
                     <Typography component="h3" variant="h6" className="bold">
                       Detalles
@@ -196,15 +198,44 @@ const ProjectPage = () => {
                       )}
                     </List>
                   </Grid>
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography
-                      component="h3"
-                      variant="h6"
-                      className="bold mb-4"
-                    >
-                      Acciones
+                  <Grid component="section" item xs={12} md={6} lg={4}>
+                    <Typography className="bold" component="h3" variant="h6">
+                      Duración
                     </Typography>
-                    {myPermissions.ToAddEmployeesToProject && (
+                    <List>
+                      <ListItem>
+                        <ListItemIcon>
+                          <TodayIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Inicio"
+                          secondary={format(
+                            new Date(project?.fecha_inicio),
+                            "yyyy-MM-dd"
+                          )}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon>
+                          <InsertInvitationIcon />{" "}
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Fin"
+                          secondary={format(
+                            new Date(project?.fecha_fin),
+                            "yyyy-MM-dd"
+                          )}
+                        />
+                      </ListItem>
+                    </List>
+                  </Grid>
+                </Grid>
+                <Typography component="h3" variant="h6" className="bold mb-4">
+                  Acciones
+                </Typography>
+                <Grid container spacing={3}>
+                  {myPermissions.ToAddEmployeesToProject && (
+                    <Grid item xs={12} md={4}>
                       <Button
                         component={Link}
                         to={`/proyecto/${project?.id}/empleados`}
@@ -215,8 +246,11 @@ const ProjectPage = () => {
                       >
                         Designar empleados
                       </Button>
-                    )}
-                    {myPermissions.ToUpdateProject && (
+                    </Grid>
+                  )}
+
+                  {myPermissions.ToUpdateProject && (
+                    <Grid item xs={12} md={4}>
                       <Button
                         component={Link}
                         to={`/editar-proyecto/${params.id}`}
@@ -228,8 +262,11 @@ const ProjectPage = () => {
                       >
                         Editar
                       </Button>
-                    )}
-                    {myPermissions.ToDeleteProject && (
+                    </Grid>
+                  )}
+
+                  {myPermissions.ToDeleteProject && (
+                    <Grid item xs={12} md={4}>
                       <Button
                         color="secondary"
                         variant="contained"
@@ -239,8 +276,8 @@ const ProjectPage = () => {
                       >
                         Eliminar
                       </Button>
-                    )}
-                  </Grid>
+                    </Grid>
+                  )}
                 </Grid>
               </CardContent>
             </Card>

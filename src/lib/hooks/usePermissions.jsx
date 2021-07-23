@@ -7,6 +7,7 @@ const usePermissions = () => {
   const [myPermissions, setMyPermissions] = useState({});
 
   useEffect(() => {
+    let isMounted = true;
     if (user) {
       //construyendo objeto de permisos
       let obj = {};
@@ -18,8 +19,9 @@ const usePermissions = () => {
           obj[propertie] = values[val].includes(user?.RolId);
         }
       }
-      setMyPermissions(obj);
+      isMounted && setMyPermissions(obj);
     }
+    return () => (isMounted = false);
   }, [user]);
 
   //retorna un objeto con todos los permisos que el usuario tiene

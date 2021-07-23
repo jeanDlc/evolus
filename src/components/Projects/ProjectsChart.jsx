@@ -16,6 +16,7 @@ const ProjectsChart = () => {
     { name: "No terminados", value: 100 },
   ]);
   useEffect(() => {
+    let isMounted = true;
     const filterProjects = () => {
       let done = 0;
       let total = 0;
@@ -23,12 +24,14 @@ const ProjectsChart = () => {
         if (project.estado) done++;
         total++;
       });
-      setData([
-        { name: "Terminados", value: done },
-        { name: "No terminados", value: total - done },
-      ]);
+      isMounted &&
+        setData([
+          { name: "Terminados", value: done },
+          { name: "No terminados", value: total - done },
+        ]);
     };
     if (projects.length > 0) filterProjects();
+    return () => (isMounted = false);
   }, [projects]);
   if (loading)
     return (
