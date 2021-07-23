@@ -189,7 +189,7 @@ const EmployeePage = () => {
                       </Button>
                     </Grid>
                   ) : null}
-                  {myPermissions.ToDeleteClient && (
+                  {myPermissions.ToDeleteEmployee && (
                     <Grid item xs={12}>
                       <Button
                         variant="contained"
