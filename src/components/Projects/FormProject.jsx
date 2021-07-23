@@ -13,6 +13,8 @@ import {
   Select,
   MenuItem,
   InputAdornment,
+  CircularProgress,
+  LinearProgress,
 } from "@material-ui/core";
 import { format } from "date-fns";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
@@ -46,12 +48,17 @@ const FormProject = () => {
   };
   const [edicion, setEdicion] = useState(false);
   const [project, setProject] = useState(initialState);
+  const [loading, setLoading] = useState(false);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const { clients } = useClients();
   useEffect(() => {
     let isMounted = true;
     if (params.id) {
       //estamos en edición
-      if (isMounted) setEdicion(true);
+      if (isMounted) {
+        setEdicion(true);
+        setLoading(true);
+      }
       //buscar el proyecto que queremos editar
       getProjectById(params.id)
         .then((res) => {
@@ -70,9 +77,13 @@ const FormProject = () => {
         })
         .catch((error) => {
           toast.error(error.response?.data?.error || "Error");
-        });
+        })
+        .then(() => isMounted && setLoading(false));
     } else {
-      setProject(initialState);
+      if (isMounted) {
+        setProject(initialState);
+        setEdicion(false);
+      }
     }
     return () => (isMounted = false);
   }, [params.id]);
@@ -85,6 +96,7 @@ const FormProject = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoadingSubmit(true);
     try {
       let res;
       if (params.id) {
@@ -105,6 +117,7 @@ const FormProject = () => {
         toast.error(error.response?.data?.error || "Ocurrió un error");
       }
     }
+    setLoadingSubmit(false);
   };
   return (
     <Layout>
@@ -123,139 +136,166 @@ const FormProject = () => {
               Llena el formulario para{" "}
               {edicion ? "editar el proyecto" : "crear un nuevo proyecto"}
             </Typography>
-            <FormControl color="secondary" margin="normal" fullWidth={true}>
-              <InputLabel htmlFor="nombre">Nombre del proyecto</InputLabel>
-              <Input
-                id="nombre"
-                onChange={handleChange}
-                value={project.nombre}
-                name="nombre"
-                type="text"
-              />
-            </FormControl>
-            <FormControl color="secondary" margin="normal" fullWidth={true}>
-              <InputLabel htmlFor="descripcion">
-                Descripción del proyecto
-              </InputLabel>
-              <Input
-                multiline
-                rows={10}
-                onChange={handleChange}
-                value={project.descripcion}
-                id="descripcion"
-                name="descripcion"
-                type="text"
-              />
-            </FormControl>
-            <Grid
-              container
-              spacing={3}
-              style={{ marginBottom: 15, marginTop: 10 }}
-            >
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth={true} margin="normal">
-                  <TextField
-                    id="fecha_inicio"
-                    label="Inicio de proyecto"
-                    type="date"
-                    name="fecha_inicio"
-                    color="secondary"
-                    value={project.fecha_inicio}
-                    onChange={handleChange}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    aria-describedby="helper-fecha-inicio"
-                  />
-                  <FormHelperText id="helper-fecha-inicio">
-                    Fecha de inicio del proyecto
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth={true} margin="normal">
-                  <TextField
-                    id="fecha_fin"
-                    label="Fin de proyecto"
-                    type="date"
-                    name="fecha_fin"
-                    color="secondary"
-                    value={project.fecha_fin}
-                    onChange={handleChange}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    aria-describedby="helper-fecha-inicio"
-                  />
-                  <FormHelperText id="helper-fecha-inicio">
-                    Fecha de fin del proyecto
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6}>
+            {loading && edicion ? (
+              <div>
+                <p>Cargando</p>
+                <CircularProgress color="secondary" />
+              </div>
+            ) : (
+              <>
                 <FormControl color="secondary" margin="normal" fullWidth={true}>
-                  <InputLabel htmlFor="num_matricula">
-                    Número de matrícula
-                  </InputLabel>
+                  <InputLabel htmlFor="nombre">Nombre del proyecto</InputLabel>
                   <Input
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <DirectionsCarIcon />
-                      </InputAdornment>
-                    }
+                    id="nombre"
                     onChange={handleChange}
-                    value={project.num_matricula}
-                    id="num_matricula"
-                    name="num_matricula"
+                    value={project.nombre}
+                    name="nombre"
                     type="text"
                   />
                 </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6}>
                 <FormControl color="secondary" margin="normal" fullWidth={true}>
-                  <InputLabel htmlFor="monto">Monto a pagar</InputLabel>
+                  <InputLabel htmlFor="descripcion">
+                    Descripción del proyecto
+                  </InputLabel>
                   <Input
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <MonetizationOnIcon />
-                      </InputAdornment>
-                    }
+                    multiline
+                    rows={10}
                     onChange={handleChange}
-                    value={project.monto}
-                    id="monto"
-                    name="monto"
-                    type="number"
+                    value={project.descripcion}
+                    id="descripcion"
+                    name="descripcion"
+                    type="text"
                   />
                 </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <FormControl color="secondary" margin="normal" fullWidth={true}>
-                  <InputLabel id="label-select-client">Cliente</InputLabel>
-                  <Select
-                    labelId="label-select-client"
-                    onChange={handleChange}
-                    value={project.ClienteId}
-                    name="ClienteId"
-                  >
-                    {clients.map((client) => (
-                      <MenuItem key={client.id} value={client.id}>
-                        {client.nombre} {client.apellidos}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
+                <Grid
+                  container
+                  spacing={3}
+                  style={{ marginBottom: 15, marginTop: 10 }}
+                >
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth={true} margin="normal">
+                      <TextField
+                        id="fecha_inicio"
+                        label="Inicio de proyecto"
+                        type="date"
+                        name="fecha_inicio"
+                        color="secondary"
+                        value={project.fecha_inicio}
+                        onChange={handleChange}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        aria-describedby="helper-fecha-inicio"
+                      />
+                      <FormHelperText id="helper-fecha-inicio">
+                        Fecha de inicio del proyecto
+                      </FormHelperText>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth={true} margin="normal">
+                      <TextField
+                        id="fecha_fin"
+                        label="Fin de proyecto"
+                        type="date"
+                        name="fecha_fin"
+                        color="secondary"
+                        value={project.fecha_fin}
+                        onChange={handleChange}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        aria-describedby="helper-fecha-inicio"
+                      />
+                      <FormHelperText id="helper-fecha-inicio">
+                        Fecha de fin del proyecto
+                      </FormHelperText>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl
+                      color="secondary"
+                      margin="normal"
+                      fullWidth={true}
+                    >
+                      <InputLabel htmlFor="num_matricula">
+                        Número de matrícula
+                      </InputLabel>
+                      <Input
+                        startAdornment={
+                          <InputAdornment position="start">
+                            <DirectionsCarIcon />
+                          </InputAdornment>
+                        }
+                        onChange={handleChange}
+                        value={project.num_matricula}
+                        id="num_matricula"
+                        name="num_matricula"
+                        type="text"
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl
+                      color="secondary"
+                      margin="normal"
+                      fullWidth={true}
+                    >
+                      <InputLabel htmlFor="monto">Monto a pagar</InputLabel>
+                      <Input
+                        startAdornment={
+                          <InputAdornment position="start">
+                            <MonetizationOnIcon />
+                          </InputAdornment>
+                        }
+                        onChange={handleChange}
+                        value={project.monto}
+                        id="monto"
+                        name="monto"
+                        type="number"
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl
+                      color="secondary"
+                      margin="normal"
+                      fullWidth={true}
+                    >
+                      <InputLabel id="label-select-client">Cliente</InputLabel>
+                      <Select
+                        labelId="label-select-client"
+                        onChange={handleChange}
+                        value={project.ClienteId}
+                        name="ClienteId"
+                      >
+                        {clients.map((client) => (
+                          <MenuItem key={client.id} value={client.id}>
+                            {client.nombre} {client.apellidos}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
 
-            <Button
-              startIcon={edicion ? <EditIcon /> : <AddCircleIcon />}
-              type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-            >
-              Guardar {edicion && "cambios"}
-            </Button>
+                <Button
+                  startIcon={edicion ? <EditIcon /> : <AddCircleIcon />}
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  disabled={loadingSubmit}
+                >
+                  Guardar {edicion && "cambios"}
+                </Button>
+                {loadingSubmit && (
+                  <div className="my-4">
+                    <LinearProgress color="secondary" />
+                  </div>
+                )}
+              </>
+            )}
           </CardContent>
         </Card>
       </Container>

@@ -10,6 +10,7 @@ import {
   FormControl,
   Button,
   FormHelperText,
+  CircularProgress,
 } from "@material-ui/core";
 import Layout from "../Layout/Layout";
 import useEmployees from "../../lib/hooks/useEmployees";
@@ -22,7 +23,7 @@ const FormEmployeesForProject = () => {
   const [selectedIdEmployees, setSelectedIdEmployees] = useState([]);
   const { id: projectId } = useParams();
   const { push } = useHistory();
-  const employees = useEmployees();
+  const { employees, loading } = useEmployees();
   const { project } = UseOneProject(projectId);
   useEffect(() => {
     //obtener los empleados para rellenar el checkbox
@@ -77,6 +78,11 @@ const FormEmployeesForProject = () => {
             >
               <FormLabel component="legend">Empleados</FormLabel>
               <FormGroup>
+                {loading && (
+                  <div className="my-4">
+                    <CircularProgress color="secondary" />
+                  </div>
+                )}
                 {employees
                   .filter((employee) => employee.RolId > 2)
                   .map((emp) => (

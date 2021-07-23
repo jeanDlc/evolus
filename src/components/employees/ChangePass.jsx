@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
   TextField,
+  LinearProgress,
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import Layout from "../Layout/Layout";
@@ -12,8 +13,10 @@ import useForm from "../../lib/hooks/useForm";
 import validatePassFields from "../../lib/validation/forms/changePass";
 import { changePassword } from "../../lib/services/employees";
 import { useParams, useHistory } from "react-router-dom";
+import { useState } from "react";
 import { toast } from "react-toastify";
 const ChangePass = () => {
+  const [loadingSumit, setLoadingSubmit] = useState(false);
   const params = useParams();
   const { push } = useHistory();
   const employeeId = params.id;
@@ -24,6 +27,7 @@ const ChangePass = () => {
   };
   const postNewPassword = () => {
     //consultar a la api para cambiar el password
+    setLoadingSubmit(true);
     changePassword(employeeId, fields)
       .then((res) => {
         toast.success(res.msg || "Éxito");
@@ -32,7 +36,8 @@ const ChangePass = () => {
       .catch((error) => {
         console.log(error.response || error);
         toast.error(error.response?.data?.error || "Ocurrió un error");
-      });
+      })
+      .then(() => setLoadingSubmit(false));
   };
   const { handleSubmit, handleChange, fields, errors } = useForm(
     INITIAL_STATE,
@@ -98,9 +103,12 @@ const ChangePass = () => {
               style={{ marginTop: 15 }}
               size="large"
               type="submit"
+              disabled={loadingSumit}
             >
               Guardar cambios
             </Button>
+
+            {loadingSumit && <LinearProgress className="mt-4" />}
           </CardContent>
         </Card>
       </Container>

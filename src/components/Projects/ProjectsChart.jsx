@@ -1,10 +1,16 @@
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts";
-import { Typography, useTheme, List, ListItem } from "@material-ui/core";
+import {
+  Typography,
+  useTheme,
+  List,
+  ListItem,
+  CircularProgress,
+} from "@material-ui/core";
 import useProjects from "../../lib/hooks/useProjects";
 import { useState, useEffect } from "react";
 const ProjectsChart = () => {
   const { palette } = useTheme();
-  const projects = useProjects();
+  const { projects, loading } = useProjects();
   const [data, setData] = useState([
     { name: "Terminados", value: 0 },
     { name: "No terminados", value: 100 },
@@ -24,8 +30,13 @@ const ProjectsChart = () => {
     };
     if (projects.length > 0) filterProjects();
   }, [projects]);
-
-  if (!projects.length)
+  if (loading)
+    return (
+      <div>
+        <CircularProgress color="secondary" />
+      </div>
+    );
+  if (!projects.length && !loading)
     return <Typography>No hay datos por analizar</Typography>;
   return (
     <>

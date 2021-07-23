@@ -1,14 +1,17 @@
-import { Typography } from "@material-ui/core";
+import {
+  Typography,
+  makeStyles,
+  AppBar,
+  Toolbar,
+  IconButton,
+  useTheme,
+  Drawer,
+  useMediaQuery,
+  CircularProgress,
+} from "@material-ui/core";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Drawer from "@material-ui/core/Drawer";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
 import useAuthState from "../../lib/hooks/useAuthState";
@@ -70,14 +73,17 @@ const Navbar = () => {
           >
             <Link to="/">Evolus</Link>
           </Typography>
-
-          <Link to={`/empleado/${user?.id}`}>
-            {bigScreen ? (
-              `${user?.nombre} ${user?.apellidos}`
-            ) : (
-              <AccountCircleIcon />
-            )}
-          </Link>
+          {user ? (
+            <Link to={`/empleado/${user?.id}`}>
+              {bigScreen ? (
+                `${user?.nombre} ${user?.apellidos}`
+              ) : (
+                <AccountCircleIcon />
+              )}
+            </Link>
+          ) : (
+            <CircularProgress color="secondary" />
+          )}
         </Toolbar>
       </AppBar>
       <Drawer open={open} onClose={closeMenu}>

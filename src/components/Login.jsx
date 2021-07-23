@@ -9,18 +9,20 @@ import {
   InputLabel,
   Typography,
   FormHelperText,
+  LinearProgress,
 } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
 import useAuthState from "../lib/hooks/useAuthState";
 import useForm from "../lib/hooks/useForm";
 import validateLogInForm from "../lib/validation/forms/logIn";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 const Login = () => {
   const history = useHistory();
   //función que inicia sesión del usuario
   const { logIn, authenticated } = useAuthState();
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   //campos del formulario
   const INITIAL_STATE = {
     email: "",
@@ -30,11 +32,16 @@ const Login = () => {
     //si el ususario está autenticado, redirigir a Home
     if (authenticated) history.push("/");
   }, [authenticated]);
+  const handleLogIn = async () => {
+    setLoadingSubmit(true);
+    await logIn(fields);
+    setLoadingSubmit(false);
+  };
   //encarga de la validación y el llamado a logIn
   const { handleSubmit, handleChange, errors, fields } = useForm(
     INITIAL_STATE,
     validateLogInForm,
-    () => logIn(fields)
+    handleLogIn
   );
   //formulario para iniciar sesión
   return (
@@ -102,9 +109,11 @@ const Login = () => {
             color="primary"
             type="submit"
             style={{ marginTop: 18 }}
+            disabled={loadingSubmit}
           >
             Iniciar sesión
           </Button>
+          {loadingSubmit && <LinearProgress className="mt-4" />}
         </CardContent>
       </Card>
     </Container>

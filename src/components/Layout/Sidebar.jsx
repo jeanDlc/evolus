@@ -1,12 +1,17 @@
-import { makeStyles } from "@material-ui/core/styles";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import List from "@material-ui/core/List";
+import {
+  LinearProgress,
+  List,
+  ListSubheader,
+  makeStyles,
+  Box,
+  Button,
+  Divider,
+} from "@material-ui/core";
 import WorkIcon from "@material-ui/icons/Work";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import GradeIcon from "@material-ui/icons/Grade";
 import ListIcon from "@material-ui/icons/List";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { Box, Button, Divider } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import useAuthState from "../../lib/hooks/useAuthState";
 import Menu from "./menu/Menu";
@@ -31,7 +36,7 @@ const Sidebar = () => {
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          {`Hola ${user?.nombre}`}
+          {user ? `Hola ${user?.nombre}` : <LinearProgress />}
         </ListSubheader>
       }
       className={classes.sidebar}
@@ -93,18 +98,22 @@ const Sidebar = () => {
         />
       </Menu>
 
-      <Divider />
-      <Box paddingX={2} paddingTop={2}>
-        <Button
-          startIcon={<ExitToAppIcon />}
-          onClick={logOut}
-          color="primary"
-          fullWidth={true}
-          variant="contained"
-        >
-          Cerrar sesión
-        </Button>
-      </Box>
+      {user && (
+        <>
+          <Divider />
+          <Box paddingX={2} paddingTop={2}>
+            <Button
+              startIcon={<ExitToAppIcon />}
+              onClick={logOut}
+              color="primary"
+              fullWidth={true}
+              variant="contained"
+            >
+              Cerrar sesión
+            </Button>
+          </Box>
+        </>
+      )}
     </List>
   );
 };

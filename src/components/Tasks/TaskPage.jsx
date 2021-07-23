@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     marginTop: 18,
-    marginBottom: 50,
+    marginBottom: 10,
+    textTransform: "capitalize",
+    fontWeight: "bold",
   },
 }));
 const TaskPage = () => {
@@ -43,7 +45,12 @@ const TaskPage = () => {
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
   const params = useParams();
-  const { task, error, errorMessage } = useOneTask(params.id);
+  const {
+    task,
+    error,
+    errorMessage,
+    loading: loadingTask,
+  } = useOneTask(params.id);
 
   useEffect(() => {
     if (error) {
@@ -74,105 +81,125 @@ const TaskPage = () => {
       <Container maxWidth="sm" component="main">
         <Card style={{ marginTop: 30 }}>
           <CardContent>
-            <Typography
-              className={classes.title}
-              component="h2"
-              variant="h4"
-              align="center"
-            >
-              <span className={classes.bold}>Tarea: </span> {task.nombre}
-            </Typography>
-            <Grid container>
-              <Grid item xs={12} md={6}>
+            {loadingTask ? (
+              <div className="my-4">
+                <p>Espere...</p>
+                <CircularProgress color="secondary" />
+              </div>
+            ) : (
+              <>
+                <Typography
+                  className={classes.title}
+                  component="h2"
+                  variant="h4"
+                  align="center"
+                >
+                  {task.nombre}
+                </Typography>
+                <Typography align="center" className="mb-4">
+                  Tarea{" "}
+                </Typography>
+                <Grid container>
+                  <Grid item xs={12} md={6}>
+                    <Typography
+                      className={classes.bold}
+                      component="h3"
+                      variant="h6"
+                      gutterBottom
+                    >
+                      Estado
+                    </Typography>
+                    <Box display="flex" alignItems="center" marginBottom={3}>
+                      {done ? (
+                        <>
+                          <DoneIcon
+                            color="secondary"
+                            style={{ marginRight: 10 }}
+                          />
+                          <Typography color="textSecondary">
+                            Terminado
+                          </Typography>
+                        </>
+                      ) : (
+                        <>
+                          <WarningIcon
+                            color="error"
+                            style={{ marginRight: 10 }}
+                          />
+                          <Typography color="textSecondary">
+                            Sin terminar
+                          </Typography>
+                        </>
+                      )}
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    {loading ? (
+                      <CircularProgress color="secondary" />
+                    ) : (
+                      myPermissions.ToUpdateStateTask && (
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={done}
+                              onChange={handleTaskEstado}
+                              name="estado"
+                              color="secondary"
+                            />
+                          }
+                          label={done ? "Terminado" : "No terminado"}
+                        />
+                      )
+                    )}
+                  </Grid>
+                </Grid>
+
                 <Typography
                   className={classes.bold}
                   component="h3"
                   variant="h6"
                   gutterBottom
                 >
-                  Estado
+                  Descripción
                 </Typography>
-                <Box display="flex" alignItems="center" marginBottom={3}>
-                  {done ? (
-                    <>
-                      <DoneIcon color="secondary" style={{ marginRight: 10 }} />
-                      <Typography color="textSecondary">Terminado</Typography>
-                    </>
-                  ) : (
-                    <>
-                      <WarningIcon color="error" style={{ marginRight: 10 }} />
-                      <Typography color="textSecondary">
-                        Sin terminar
-                      </Typography>
-                    </>
-                  )}
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                {loading ? (
-                  <CircularProgress color="secondary" />
-                ) : (
-                  myPermissions.ToUpdateStateTask && (
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={done}
-                          onChange={handleTaskEstado}
-                          name="estado"
-                          color="secondary"
-                        />
-                      }
-                      label={done ? "Terminado" : "No terminado"}
-                    />
-                  )
+                <Typography color="textSecondary" style={{ marginBottom: 18 }}>
+                  {task.descripcion}
+                </Typography>
+                {myPermissions?.ToUpdateTask && (
+                  <Button
+                    component={Link}
+                    to={`/editar-tarea/${params.id}`}
+                    fullWidth
+                    color="primary"
+                    variant="contained"
+                    style={{ marginBottom: 10 }}
+                    startIcon={<EditIcon />}
+                  >
+                    Editar
+                  </Button>
                 )}
-              </Grid>
-            </Grid>
+                {myPermissions?.ToDeleteTask && (
+                  <Button
+                    color="secondary"
+                    onClick={() => setOpenDelete(true)}
+                    variant="contained"
+                    fullWidth
+                    startIcon={<DeleteIcon />}
+                  >
+                    Eliminar
+                  </Button>
+                )}
 
-            <Typography
-              className={classes.bold}
-              component="h3"
-              variant="h6"
-              gutterBottom
-            >
-              Descripción
-            </Typography>
-            <Typography color="textSecondary" style={{ marginBottom: 18 }}>
-              {task.descripcion}
-            </Typography>
-            {myPermissions?.ToUpdateTask && (
-              <Button
-                component={Link}
-                to={`/editar-tarea/${params.id}`}
-                fullWidth
-                color="primary"
-                variant="contained"
-                style={{ marginBottom: 10 }}
-                startIcon={<EditIcon />}
-              >
-                Editar
-              </Button>
+                <Dialog
+                  open={openDelete}
+                  onClose={() => setOpenDelete(false)}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <ConfirmDeleteTask setOpen={setOpenDelete} task={task} />
+                </Dialog>
+              </>
             )}
-            {myPermissions?.ToDeleteTask && (
-              <Button
-                color="secondary"
-                onClick={() => setOpenDelete(true)}
-                variant="contained"
-                fullWidth
-                startIcon={<DeleteIcon />}
-              >
-                Eliminar
-              </Button>
-            )}
-
-            <Dialog
-              open={openDelete}
-              onClose={() => setOpenDelete(false)}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <ConfirmDeleteTask setOpen={setOpenDelete} task={task} />
-            </Dialog>
           </CardContent>
         </Card>
       </Container>

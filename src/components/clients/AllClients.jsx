@@ -1,18 +1,21 @@
-import { Container, Typography } from "@material-ui/core";
+import { Container, Typography, CircularProgress } from "@material-ui/core";
 import CardClientList from "./CardClientList";
 import Layout from "../Layout/Layout";
 import Heading from "../ui/Heading";
 import useClients from "../../lib/hooks/useClients";
 const AllClients = () => {
-  const { clients } = useClients();
+  const { clients, loading } = useClients();
   return (
     <Layout>
       <Container component="main">
         <Heading content="Clientes" component="h2" />
-        {clients.length ? (
-          <CardClientList clientsArray={clients} />
+
+        {loading ? (
+          <div>
+            <CircularProgress color="secondary" />
+          </div>
         ) : (
-          <Typography>Aún no hay clientes</Typography>
+          <CardClientList clientsArray={clients} />
         )}
       </Container>
     </Layout>

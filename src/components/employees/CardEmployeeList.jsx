@@ -1,7 +1,9 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import CardEmployeeItem from "./CardEmployeeItem";
 const CardEmployeeList = ({ employeesArray }) => {
+  if (!employeesArray.length)
+    return <Typography>Aún no hay empleados</Typography>;
   return (
     <Grid container spacing={3}>
       {employeesArray.map((employee) => (

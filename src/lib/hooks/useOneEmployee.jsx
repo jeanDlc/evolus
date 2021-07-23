@@ -5,8 +5,10 @@ import useRedirecTo from "./useRedirecTo";
 const useOneEmployee = (id) => {
   const redirectTo = useRedirecTo();
   const [employee, setEmployee] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     let isMounted = true;
+    isMounted && setLoading(true);
     getEmployeeById(id)
       .then((res) => {
         if (isMounted) setEmployee(res);
@@ -15,10 +17,11 @@ const useOneEmployee = (id) => {
         redirectTo("/empleados");
         toast.error(error.response?.data?.error || "Error");
         console.log(error.response || error);
-      });
+      })
+      .then(() => isMounted && setLoading(false));
     return () => (isMounted = false);
   }, [id]);
-  return employee;
+  return { employee, loading };
 };
 
 export default useOneEmployee;
