@@ -77,7 +77,7 @@ const FormEmployeesForProject = () => {
         <Card component="main">
           <CardContent component="form" onSubmit={handleSubmit}>
             <Typography component="h2" variant="h4">
-              Elige a los empleados
+              Elige a los mecánicos para el proyecto
             </Typography>
             <FormControl
               error={selectedIdEmployees.length === 0}
@@ -85,7 +85,7 @@ const FormEmployeesForProject = () => {
               color="secondary"
               margin="normal"
             >
-              <FormLabel component="legend">Empleados</FormLabel>
+              <FormLabel component="legend">Mecánicos</FormLabel>
               <FormGroup>
                 {loading && (
                   <div className="my-4">
@@ -93,7 +93,7 @@ const FormEmployeesForProject = () => {
                   </div>
                 )}
                 {employees
-                  .filter((employee) => employee.RolId > 2)
+                  .filter((employee) => employee.RolId === 4)
                   .map((emp) => (
                     <FormControlLabel
                       key={emp.id}
@@ -108,7 +108,7 @@ const FormEmployeesForProject = () => {
                     />
                   ))}
               </FormGroup>
-              <FormHelperText>ELige al menos un empleado</FormHelperText>
+              <FormHelperText>ELige al menos un mecánico</FormHelperText>
             </FormControl>
             <Button
               disabled={loadingSubmit}
