@@ -16,6 +16,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
 import useAuthState from "../../lib/hooks/useAuthState";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import "./navbar.css";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -71,7 +72,9 @@ const Navbar = () => {
             variant="h6"
             className={classes.title}
           >
-            <Link to="/">Evolus</Link>
+            <Link to="/">
+              <img className="logo" src="/evolus.svg" alt="Evolus" />
+            </Link>
           </Typography>
           {user ? (
             <Link to={`/empleado/${user?.id}`}>

@@ -1,0 +1,12 @@
+.logo {
+  max-width: 6rem;
+}
+a .logo {
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+@media (min-width: 768px) {
+  .logo {
+    max-width: 10rem;
+  }
+}
