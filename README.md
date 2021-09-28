@@ -4,10 +4,10 @@
 Este es el código de la parte Frontend para el sistema [Evolus](https://evolus.netlify.app/).
 
 ## Vista previa
-Una vista previa del panel de proyectos del sistema:
-
+Una vista previa del login del sistema:
 ![login](https://user-images.githubusercontent.com/68133935/135175975-e9a43e9d-815b-4d9a-b5cf-a5400f8ef75b.PNG)
 
+Una vista previa del panel de proyectos del sistema:
 ![3](https://user-images.githubusercontent.com/68133935/135175877-e6644171-9e5d-44f2-bb8d-f32facda10e9.PNG)
 
 ## Arquitectura
